@@ -55,6 +55,7 @@ public class AccountsController {
     public String Update_accounts(Model model, @AuthenticationPrincipal CustomUserDetail currUser) {
         DogovorDTO dogovorDTO = dogovor.findByUserId(currUser.getId());
         if(dogovorDTO.getStatus() == DogovorStatus.Заключен) {
+            model.addAttribute("id", currUser.getId());
             model.addAttribute("account", accountsEntityRepository.findAllByUserEntityId(currUser.getId()));
             return "DataTable";
         }
@@ -66,6 +67,7 @@ public class AccountsController {
         DogovorDTO dogovorDTO = dogovor.findByUserId(currUser.getId());
         if(dogovorDTO.getStatus() == DogovorStatus.Заключен) {
             String SertionValue = "";
+            model.addAttribute("id", currUser.getId());
             model.addAttribute("userEntity", currUser);
             model.addAttribute("vibor_1", SertionValue);
             model.addAttribute("account", new AccountsDTO());

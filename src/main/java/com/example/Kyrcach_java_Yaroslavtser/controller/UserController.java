@@ -147,6 +147,7 @@ public class UserController {
     public String Byx_add(Model model,@AuthenticationPrincipal CustomUserDetail currentUser) {
         DogovorDTO dogovorDTO = dogovor.findByUserId(currentUser.getId());
         if(dogovorDTO.getStatus() == DogovorStatus.Заключен) {
+            model.addAttribute("id", currentUser.getId());
             model.addAttribute("userEntity", currentUser);
             model.addAttribute("bux", new YchetDTO());
             return "Byx_ychetAdd";
@@ -181,6 +182,7 @@ public class UserController {
     public String Oper_add(Model model,@AuthenticationPrincipal CustomUserDetail currentUser) {
         DogovorDTO dogovorDTO = dogovor.findByUserId(currentUser.getId());
         if(dogovorDTO.getStatus() == DogovorStatus.Заключен) {
+            model.addAttribute("id", currentUser.getId());
             model.addAttribute("userEntity", currentUser);
             model.addAttribute("bux", new YchetDTO());
             return "oper_ychetAdd";
@@ -215,6 +217,7 @@ public class UserController {
             Model model,
             @AuthenticationPrincipal CustomUserDetail currUser
     ){
+            model.addAttribute("id", currUser.getId());
             model.addAttribute("balance", balanceService.findByUserId(currUser.getId()));
             return "addEditBalance";
     }
@@ -316,6 +319,7 @@ public class UserController {
                 vir = vir - accountsEntity.getSymm();
             }
         }
+        model.addAttribute("id", currUser.getId());
         model.addAttribute("vir",vir);
         return "virychka";
     }
@@ -339,6 +343,7 @@ public class UserController {
 
             }
         }
+        model.addAttribute("id", currUser.getId());
         model.addAttribute("byx",byx);
         return "byx_pr";
     }
@@ -353,6 +358,7 @@ public class UserController {
             accounts_ychetEntity1 = accountsYchetEntity;
         }
         accounts_ychetEntitiList.remove(accounts_ychetEntity1);
+        model.addAttribute("id", id_user);
         model.addAttribute("byx",accounts_ychetEntitiList);
         model.addAttribute("byx_1", accounts_ychetEntity1);
         return "byx_pr_id";
@@ -384,6 +390,7 @@ public class UserController {
 
             }
         }
+        model.addAttribute("id", currUser.getId());
         model.addAttribute("byx",byx);
         return "oper_pr";
     }
@@ -398,6 +405,7 @@ public class UserController {
             accounts_ychetEntity1 = accountsYchetEntity;
         }
         accounts_ychetEntitiList.remove(accounts_ychetEntity1);
+        model.addAttribute("id", id_user);
         model.addAttribute("byx",accounts_ychetEntitiList);
         model.addAttribute("byx_1", accounts_ychetEntity1);
         return "oper_pr_id";

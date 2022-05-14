@@ -29,6 +29,10 @@
             background: -moz-linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
             background: linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
         }
+        .p-5{
+            background-color: #a8cbd5;
+            height: 95%;
+        }
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -53,7 +57,7 @@
 <div th:replace="adminHeader :: admin-header"></div>
 <div class="p-5 mb-4 rounded-3">
     <div class="container-fluid py-5">
-
+        <input type="hidden" th:value="${id}" th:name="id">
         <h1>Выручка компании составляет : </h1>
         <h2  th:text="${vir}"></h2>
         <h1>Договор заключено :</h1>

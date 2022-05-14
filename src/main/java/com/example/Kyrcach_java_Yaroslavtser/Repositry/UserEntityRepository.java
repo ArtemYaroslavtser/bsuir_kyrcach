@@ -5,6 +5,7 @@ import com.example.Kyrcach_java_Yaroslavtser.model.DogovorStatus;
 import com.example.Kyrcach_java_Yaroslavtser.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,9 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     void deleteById(Long id);
 
     Optional<UserEntity> findById(Long id);
+
+    Optional<UserEntity> findByLoginAndPassword(String login, String password);
+
 
     UserEntity findByLogin(String login);
 

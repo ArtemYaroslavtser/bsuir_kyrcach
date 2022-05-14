@@ -54,6 +54,8 @@
 <body>
 
 <div th:replace="clientHeader :: client-header"></div>
+<input type="hidden" th:value="${id}" th:name="id">
+
 <div class="container my-5" style="width: 60vh">
     <h3>Добавление работы</h3>
     <div class="card">

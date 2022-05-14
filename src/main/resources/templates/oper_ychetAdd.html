@@ -45,7 +45,7 @@
 
 <body>
 <div th:replace="clientHeader :: client-header"></div>
-
+<input type="hidden" th:value="${id}" th:name="id">
 
 <div class="container my-5" style="width: 60vh">
     <h3>Запрос на создание оперативного учёта</h3>
@@ -72,7 +72,7 @@
                     <div class="col-md-6">
                         <input type="submit" class="btn btn-primary" th:value="#{bt.bux}">
                     </div>
-
+                    </div>
                 </form>
             </div>
         </div>

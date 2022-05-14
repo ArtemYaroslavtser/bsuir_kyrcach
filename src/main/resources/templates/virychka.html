@@ -56,9 +56,10 @@
 <body>
 
 <div th:replace="clientHeader :: client-header"></div>
+
 <div class="p-5 mb-4 rounded-3">
     <div class="container-fluid py-5">
-
+        <input type="hidden" th:value="${id}" th:name="id">
         <h1>Выручка за все работы составляет: </h1>
         <h2  th:text="${vir}"></h2>
         <div class="d-grid gap-2 col-6 mx-auto">

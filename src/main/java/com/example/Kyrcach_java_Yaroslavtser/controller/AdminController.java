@@ -119,7 +119,7 @@ public class AdminController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(path = "/prib")
-    public String vir_admin(Model model) {
+    public String vir_admin(Model model,  @AuthenticationPrincipal CustomUserDetail currUser) {
         int dogovor = 0;
         int vir = 0;
         List<UserEntity> userEntityList = userEntityRepository.findAllByDogovorEntity(DogovorStatus.Заключен);
@@ -127,6 +127,7 @@ public class AdminController {
             dogovor++;
             vir = vir + 500;
         }
+        model.addAttribute("id", currUser.getId());
         model.addAttribute("dogovor",dogovor);
         model.addAttribute("vir",vir);
         return "adminPrib";

@@ -29,8 +29,8 @@
         background: linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
     }
     .p-5{
-        background-color: #0f3c17;
-        height: 70%;
+        background-color: #617ead;
+        height: 99%;
     }
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -49,14 +49,15 @@
 <body>
 <div th:replace="clientHeader :: client-header"></div>
 <div class="p-5 mb-4 rounded-3">
-    <div class="container-fluid py-5">
+    <div class="d-grid gap-5 col-1 mx-auto">
 
         <input type="hidden" th:value="${id}" th:name="id">
-        <p><a class="btn btn-lg btn-secondary" th:href="@{/users/edit/{id}(id=${id})}">Редактировать пользователя</a></p>
+        <p><a class="btn btn-lg btn-secondary " th:href="@{/users/edit/{id}(id=${id})}">Редактировать пользователя</a></p>
         <p><a class="btn btn-lg btn-secondary" th:href="@{/users/work}">Добавить или изменить место работы</a></p>
         <p><a class="btn btn-lg btn-secondary" th:href="@{/users/balance}">Пополнить баланс</a></p>
     </div>
 </div>
+
 <footer class="container">
     <p class="float-end"><a href="#">Вернуться назад</a></p>
     <p>&copy; 2017–2021 Компания, ИП. &middot; <a href="#">INSTAGRAM </a> &middot; <a href="#">VK</a></p>
