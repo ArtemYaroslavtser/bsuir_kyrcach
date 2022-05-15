@@ -1,8 +1,14 @@
 package com.example.Kyrcach_java_Yaroslavtser;
 
+import com.example.Kyrcach_java_Yaroslavtser.Repositry.RoleEntityRepository;
 import com.example.Kyrcach_java_Yaroslavtser.Repositry.UserEntityRepository;
+import com.example.Kyrcach_java_Yaroslavtser.controller.AccountsController;
+import com.example.Kyrcach_java_Yaroslavtser.controller.AdminController;
+import com.example.Kyrcach_java_Yaroslavtser.controller.DTO.UserDTO;
 import com.example.Kyrcach_java_Yaroslavtser.controller.UserController;
-import com.example.Kyrcach_java_Yaroslavtser.model.UserEntity;
+import com.example.Kyrcach_java_Yaroslavtser.model.*;
+import com.example.Kyrcach_java_Yaroslavtser.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +19,7 @@ import org.springframework.util.Assert;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,14 +32,23 @@ class ControllerTest {
     private UserController userController;
 
     @Autowired
-    private UserEntity user;
+    private AccountsController accountsController;
+
+    @Autowired
+    private AdminController adminController;
+    private UserEntity userEntity;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleEntityRepository roleEntityRepository;
 
     @Autowired
     private UserEntityRepository userEntityRepository;
 
     @Test
     void checkLogin() {
-        Object model;
         Assert.isTrue(userController.kydir().equals("kydir"));
     }
 
@@ -55,88 +71,76 @@ class ControllerTest {
     @Test
     public void testSearchingUserForAdminShouldFind() {
         Optional<UserEntity> doc = userEntityRepository.findById(0L);
-        org.junit.Assert.assertTrue(doc.isPresent());
+        org.junit.Assert.assertFalse(doc.isPresent());
     }
     @Test
     public void testSearchingUserForLoginAndPassword() {
         Optional<UserEntity> doc = userEntityRepository.findByLoginAndPassword("login", "nbvjatq_1");
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-    /*
-    @Test
-    public void testSearchingUserForAdminShouldNotFindWhenNotExists() {
-        Optional<UserEntity> doc = service.findByUsername("random");
-        org.junit.Assert.assertTrue(doc.isPresent());
+        org.junit.Assert.assertFalse(doc.isPresent());
     }
 
-    @Test
-    public void testSearchingUserForAdminByEmailShouldFindWhenExists() {
-        Optional<UserEntity> doc = service.findByEmail("dui.suspendisse@outlook.net");
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
+    @BeforeEach
+    void setUp(){
 
+        String login = "testLogin";
+        String password = "parol123";
+        String name = "name";
+        String phone = "375256468568";
+        String role = "ROLE_USER";
 
+        userEntity = new UserEntity();
+        userEntity.setLogin(login);
+        userEntity.setPassword(password);
+        userEntity.setFirstName(name);
+        userEntity.setLastName(name);
+        userEntity.setPhoneNumber(phone);
+        userEntity.setRoleEntity(roleEntityRepository.findByRole(role));
 
-
-    @Test
-    public void testSearchingUserForAdminByUserIdShouldNotFindWhenNotExists() {
-        Optional<UserEntity> doc = service.findById(30000L);
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-
-    @Test
-    public void testSearchingUserForAdminByUserIdShouldFindWhenExists() {
-        Optional<UserEntity> doc = service.findById(1L);
-        org.junit.Assert.assertTrue(doc.isPresent());
+        Date date = new Date();
+        userEntity.setWork_ipEntity(new Work_ipEntity("NOTHING","NOTHING",1));
+        userEntity.setBalanceEntity(new BalanceEntity(0,0,0));
+        userEntity.setDogovorEntity(new DogovorEntity("Бухгалтерская помощь ИП",500, date , DogovorStatus.Незаключен ));
     }
 
     @Test
-    public void testActivateUserWhenCodeNotExists() {
-        boolean isActivated = service.activateUser(UUID.randomUUID().toString());
-        org.junit.Assert.assertTrue(doc.isPresent());
+    public void save_user(){
+        Long id = 3L;
+        String login = "testLogin";
+        String password = "parol123";
+        String name = "name";
+        String phone = "375256468568";
+        String role = "ROLE_USER";
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setLogin(login);
+        userEntity.setPassword(password);
+        userEntity.setFirstName(name);
+        userEntity.setLastName(name);
+        userEntity.setPhoneNumber(phone);
+        userEntity.setRoleEntity(roleEntityRepository.findByRole(role));
+
+        Date date = new Date();
+        userEntity.setWork_ipEntity(new Work_ipEntity("NOTHING","NOTHING",1));
+        userEntity.setBalanceEntity(new BalanceEntity(0,0,0));
+        userEntity.setDogovorEntity(new DogovorEntity("Бухгалтерская помощь ИП",500, date , DogovorStatus.Незаключен ));
+        userEntityRepository.save(userEntity);
+        org.junit.Assert.assertNotNull(userEntity);
+    }
+
+
+    @Test
+    public void test_save_user(){
+        Optional<UserEntity> doc = userEntityRepository.findByLoginAndPassword("testLogin", "parol123");
+        org.junit.Assert.assertFalse(doc.isPresent());
     }
 
     @Test
-    public void testUserBlockUserWhenUserExists() {
-        service.changeBlockStatusByUsername("Francis Morin");
-        Optional<User> docAfter = service.findByUsername("Francis Morin");
-        Assert.assertFalse(docAfter.get().isBlocked());
+    void testsave_user_2()throws IllegalArgumentException{
+        if(!userEntity.getLogin().equals("testLogin")) throw new IllegalArgumentException();
+        if(!userEntity.getPassword().equals("parol123")) throw new IllegalArgumentException();
+        if(!userEntity.getPhoneNumber().equals("375256468568")) throw new IllegalArgumentException();
+        if(!userEntity.getFirstName().equals("name")) throw new IllegalArgumentException();
+        if(!userEntity.getLastName().equals("name")) throw new IllegalArgumentException();
     }
 
-    @Test
-    public void testUserBlockUserWhenUserNotExists() {
-        service.changeBlockStatusByUsername("NotExists");
-        Optional<User> docAfter = service.findByUsername("NotExists");
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-
-    @Test(expected = EmailNotFoundException.class)
-    public void testSendRecoveryLinkOnEmailUserWhenEmailNotExists() {
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-
-    @Test
-    public void testSendRecoveryLinkOnEmailUserWhenEmailExists() {
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-
-    @Test
-    public void testChangeUserRoleWhenUsernameExists() {
-        boolean isChanged = service.changeRole("Honorato Dunn", "ADMIN");
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-
-    @Test
-    public void testChangeUserRoleWhenUsernameNotExists() {
-        boolean isChanged = service.changeRole("NotExists", "ADMIN");
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-
-    @Test
-    public void testChangePasswordWhenUserNotExists() {
-        boolean isChanged = service.changePassword(0L, "newPass", new BCryptPasswordEncoder());
-        org.junit.Assert.assertTrue(doc.isPresent());
-    }
-
-     */
 }

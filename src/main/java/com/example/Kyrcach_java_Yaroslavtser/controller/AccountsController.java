@@ -50,6 +50,10 @@ public class AccountsController {
         return "accounts";
     }
 
+    public String View_accounts_test() {
+        return "accounts";
+    }
+
 
     @GetMapping(path = "/update")
     public String Update_accounts(Model model, @AuthenticationPrincipal CustomUserDetail currUser) {
@@ -62,6 +66,9 @@ public class AccountsController {
         return "ErorDogovor";
     }
 
+    public String Update_accounts_test(){
+        return "DataTable";
+    }
     @GetMapping(path = "/add")
     public String Add_accounts(Model model, @AuthenticationPrincipal CustomUserDetail currUser) {
         DogovorDTO dogovorDTO = dogovor.findByUserId(currUser.getId());
@@ -76,7 +83,9 @@ public class AccountsController {
         return "ErorDogovor";
     }
 
-
+    public String Add_accounts_test(){
+        return "accountsAdd";
+    }
 
 
     @PostMapping(path = "/add")

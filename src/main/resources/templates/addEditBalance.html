@@ -73,28 +73,24 @@
                     <div class="row">
 
                         <div class="form-group col-md-8">
-                            <label for="login" class="col-form-label" th:text="#{text.login}"></label>
+                            <label for="login" class="col-form-label" th:text="#{text.balance__}"></label>
                             <input type="number" th:value="${balance.balance}" th:name="balance" class="form-control"
-                                   id="login" th:placeholder="#{text.login}" autofocus required
-                                   pattern="([a-zA-Z])([a-zA-Z0-9]{3,13})" maxlength="14"/>
-                            <span class="form__error" th:text="#{text.error.login}"></span>
+                                   id="login" th:placeholder="#{text.balance__}" autofocus required
+                                   />
                         </div>
 
                         <div class="form-group col-md-8">
-                            <label for="password" class="col-form-label" th:text="#{text.password}"></label>
+                            <label for="password" class="col-form-label" th:text="#{text.salary}"></label>
                             <input type="number" th:value="${balance.salary}" th:name="salary" class="form-control"
-                                   id="password" th:placeholder="#{text.password}" autofocus required minlength="8"
-                                   maxlength="14"/>
-                            <span class="form__error" th:text="#{text.error.password}"></span>
+                                   id="password" th:placeholder="#{text.password}" autofocus required/>
                         </div>
 
 
                         <div class="form-group col-md-8">
-                            <label for="firstName" class="col-form-label" th:text="#{text.firstName}"></label>
+                            <label for="firstName" class="col-form-label" th:text="#{text.expensive}"></label>
                             <input type="number" th:value="${balance.expensive}" th:name="expensive" class="form-control"
                                    id="firstName" th:placeholder="#{text.firstName}" autofocus required
                             />
-                            <span class="form__error" th:text="#{text.error.firstName}"></span>
                         </div>
 
 

@@ -38,12 +38,12 @@ public class UserServiceImpl implements UserService {
 
         Long idExistUser = userRepository.getIdUserByLogin(userDTO.getLogin());
         if (idExistUser != null) {
-            throw new EditUsersParametersExistException("This_login_is_exist", userDTO);
+            return false;
         }
 
         idExistUser = userRepository.getIdUserByPhoneNumber(userDTO.getPhoneNumber());
         if (idExistUser != null) {
-            throw new EditUsersParametersExistException("This_phone_number_already_exist", userDTO);
+           return false;
         }
         UserEntity userEntity = new UserEntity();
         userEntity.setLogin(userDTO.getLogin());

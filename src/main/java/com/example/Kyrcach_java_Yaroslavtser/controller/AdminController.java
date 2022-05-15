@@ -83,7 +83,9 @@ public class AdminController {
 
         return byx_admin(model);
     }
-
+    public String byx_admin_test(){
+        return "adminTable";
+    }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(path = "/oper")
@@ -108,6 +110,9 @@ public class AdminController {
         return "Oper_admin";
     }
 
+    public String oper_admin_test() {
+        return "Oper_admin";
+    }
     @PostMapping(path =  "/oper")
     public String Oper_post(@RequestParam Long id, Model model) {
 
@@ -132,7 +137,9 @@ public class AdminController {
         model.addAttribute("vir",vir);
         return "adminPrib";
     }
-
+    public String vir_admin_test(){
+        return "adminPrib";
+    }
 
     @PostMapping(path =  "/polzovateli")
     public String delete_pol(@RequestParam Long id, Model model) {
@@ -151,7 +158,9 @@ public class AdminController {
         return "polzovateli";
     }
 
-
+    public String polzovateli_test() {
+        return "polzovateli";
+    }
 
 
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -159,6 +168,10 @@ public class AdminController {
     public String admins(Model model) {
         List<UserEntity> userEntityList = userEntityRepository.findAllByRoleEntity_Role("ROLE_ADMIN");
         model.addAttribute("user",userEntityList);
+        return "admins";
+    }
+
+    public String admins_test() {
         return "admins";
     }
 }
