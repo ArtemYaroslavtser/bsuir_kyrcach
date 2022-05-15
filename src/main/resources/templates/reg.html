@@ -74,7 +74,7 @@
                             <label for="login" class="col-form-label" th:text="#{text.login}"></label>
                             <input type="text" th:value="${user?.login}" th:name="login" class="form-control"
                                    id="login" th:placeholder="#{text.login}" autofocus required
-                                   pattern="[A-ZА-ЯЁ]([A-Za-zА-Яа-яЁё]{2,13})" maxlength="14"/>
+                                    maxlength="14"/>
                             <span class="form__error" th:text="#{text.error.login}"></span>
                         </div>
 

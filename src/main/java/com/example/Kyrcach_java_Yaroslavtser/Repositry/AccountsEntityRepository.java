@@ -18,11 +18,11 @@ public interface AccountsEntityRepository extends JpaRepository<AccountsEntity, 
     @Query(value = "SELECT u FROM AccountsEntity u WHERE u.userEntity.id = ?1")
     List<AccountsEntity> findAllByUserEntityId(Long id);
 
-    @Query(value = "SELECT u FROM AccountsEntity u WHERE u.date = ?1")
-    List<AccountsEntity> findAllByDate(Date date);
+    @Query(value = "SELECT u FROM AccountsEntity u WHERE u.date = ?1 AND u.userEntity.id = ?2")
+    List<AccountsEntity> findAllByDate(Date date, Long id);
 
-    @Query(value = "SELECT u FROM AccountsEntity u WHERE u.date >= ?1 AND u.date <= ?2")
-    List<AccountsEntity> findAllByDateFirstandSecond(Date dateFirst, Date Second);
+    @Query(value = "SELECT u FROM AccountsEntity u WHERE u.date >= ?1 AND u.date <= ?2 AND u.userEntity.id = ?3")
+    List<AccountsEntity> findAllByDateFirstandSecond(Date dateFirst, Date Second, Long id);
 
     List<AccountsEntity> findAllByUserEntityIdAndStatus(Long id, OrderStatus status, Sort sort);
 

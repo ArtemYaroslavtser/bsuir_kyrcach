@@ -115,14 +115,8 @@ public class UserController {
     @GetMapping(path = {"/vibor_edit","/vibor_edit/{id}"})
     public String getVibor(Model model,
             @AuthenticationPrincipal CustomUserDetail currentUser) {
-
-        DogovorDTO dogovorDTO = dogovor.findByUserId(currentUser.getId());
-        if(dogovorDTO.getStatus() == DogovorStatus.Заключен) {
             model.addAttribute("id", currentUser.getId());
             return "vibor_edit";
-        }
-
-        return "ErorDogovor";
 
     }
 
@@ -382,7 +376,7 @@ public class UserController {
 
 
     @GetMapping(path = "/byx_pr_id")
-    public String byx_pr_id(Model model,Long id, Long id_user) {
+    public String byx_pr(Model model,Long id, Long id_user) {
         Long id_ychet = 0L;
         Accounts_ychetEntity accounts_ychetEntity1 = null;
         List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId(id);
@@ -400,7 +394,7 @@ public class UserController {
     @PostMapping(path =  "/byx_pr")
     public String Byx_pr_post(@RequestParam Long id,@RequestParam Long id_user, Model model) {
 
-        return byx_pr_id(model, id, id_user);
+        return byx_pr(model, id, id_user);
     }
 
     @GetMapping(path = "/oper_pr")
@@ -429,7 +423,7 @@ public class UserController {
 
 
     @GetMapping(path = "/oper_pr_id")
-    public String oper_pr_id(Model model,Long id, Long id_user) {
+    public String oper_pr(Model model,Long id, Long id_user) {
         Long id_ychet = 0L;
         Accounts_ychetEntity accounts_ychetEntity1 = null;
         List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId(id);
@@ -447,7 +441,7 @@ public class UserController {
     @PostMapping(path =  "/oper_pr")
     public String oper_pr_post(@RequestParam Long id,@RequestParam Long id_user, Model model) {
 
-        return oper_pr_id(model, id, id_user);
+        return oper_pr(model, id, id_user);
     }
 
     @GetMapping(path = "/KYDIR")

@@ -33,8 +33,8 @@ public class Accounts_ychetServiceImpl implements Accounts_ychetService {
 
         int viruchka = 0;
         int byx_balance = 0;
-        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDate(ychetDTO.getDateFirst());
-        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDate(ychetDTO.getDateFirst());
+        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDate(ychetDTO.getDateFirst(), ychetEntity.getUserEntity1().getId());
+        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDate(ychetDTO.getDateFirst(), ychetEntity.getUserEntity1().getId());
         for (AccountsEntity accountsEntity : accountsEntityList1) {
             if(accountsEntity.getStatus() == OrderStatus.Выручка) {
                 viruchka = viruchka + accountsEntity.getSymm();
@@ -65,7 +65,7 @@ public class Accounts_ychetServiceImpl implements Accounts_ychetService {
         int byx_balance = 0;
 
 
-        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond());
+        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
 
         for (AccountsEntity accountsEntity : accountsEntityList1) {
             if(accountsEntity.getStatus() == OrderStatus.Выручка) {
@@ -77,7 +77,7 @@ public class Accounts_ychetServiceImpl implements Accounts_ychetService {
             byx_balance = byx_balance + accountsEntity.getSymm();
         }
 
-        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond());
+        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
         for (AccountsEntity accountsEntity : accountsEntityList) {
             Accounts_ychetEntity accounts_ychetEntity = new Accounts_ychetEntity();
             accounts_ychetEntity.setAccounts(accountsEntity);

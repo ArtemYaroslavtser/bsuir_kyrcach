@@ -21,6 +21,7 @@ public class Accounts_ychetEntity extends First_Entity {
     @JoinColumn(name = "byx_balance")
     private int byx_balance;
 
+
     public int getByx_balance() {
         return byx_balance;
     }

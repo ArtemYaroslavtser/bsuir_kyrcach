@@ -148,7 +148,7 @@ public class TestService {
     @Test
     void account_ychet(){
         Date date = new Date();
-       List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDate(date);
+       List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDate(date, 10L);
        Assert.assertNotNull(accountsEntities);
     }
 
@@ -161,7 +161,7 @@ public class TestService {
     @Test
     void account_ychet_2(){
         Date date = new Date();
-        List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDateFirstandSecond(date,date);
+        List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDateFirstandSecond(date,date,10L);
         Assert.assertNotNull(accountsEntities);
     }
 }
