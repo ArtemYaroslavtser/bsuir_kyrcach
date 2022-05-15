@@ -24,7 +24,6 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 class ControllerTest {

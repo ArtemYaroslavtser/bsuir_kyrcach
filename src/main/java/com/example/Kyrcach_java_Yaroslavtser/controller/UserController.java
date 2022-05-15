@@ -9,6 +9,7 @@ import com.example.Kyrcach_java_Yaroslavtser.exception.UserNotFoundException;
 import com.example.Kyrcach_java_Yaroslavtser.model.*;
 import com.example.Kyrcach_java_Yaroslavtser.security.CustomUserDetail;
 import com.example.Kyrcach_java_Yaroslavtser.service.*;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,11 +64,15 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping()
-    public String getAllUsersByRole(@RequestParam(value = "role", required = false) String role, Model model) {
+    public String getAllUsersByRole(@RequestParam(value = "role", required = false) String role, @NotNull Model model) {
         role = role == null ? "USER" : role;
         List<UserDTO> users = roleService.getUsersByRole(role);
         model.addAttribute("role", role);
         model.addAttribute("users", users.size() == 0 ? null : users);
+        return "showUsers";
+    }
+
+    public String getAllUsersByRole() {
         return "showUsers";
     }
 
@@ -80,7 +85,6 @@ public class UserController {
         String redirect = "redirect:/users?&role=" + role;
         return redirect;
     }
-
 
 
     @GetMapping(path = {"/edit", "/edit/{id}"})
@@ -102,6 +106,10 @@ public class UserController {
             model.addAttribute("user", userDTO);
             return "addEditUser";
         }
+    }
+
+    public String getAddOrEditUserView() {
+        return "addEditUser";
     }
 
     @GetMapping(path = {"/vibor_edit","/vibor_edit/{id}"})
@@ -129,6 +137,10 @@ public class UserController {
 
     }
 
+    public String getDogovor() {
+        return "addEditDogovor";
+    }
+
     @GetMapping(path =  "/dogovor/reg")
     public String Add_orChange_Dogovor(Model model,@AuthenticationPrincipal CustomUserDetail currentUser) {
         BalanceDTO balanceDTO = balanceService.findByUserId(currentUser.getId());
@@ -154,6 +166,10 @@ public class UserController {
         }
         return "ErorDogovor";
 
+    }
+
+    public String Byx_add() {
+        return "Byx_ychetAdd";
     }
 
     @PostMapping(path =  "/bux")
@@ -191,6 +207,10 @@ public class UserController {
 
     }
 
+    public String Oper_add() {
+        return "oper_ychetAdd";
+    }
+
     @PostMapping(path =  "/oper")
     public String Oper_add_post(@Valid @ModelAttribute("bux") YchetDTO ychetDTO,
                                @AuthenticationPrincipal CustomUserDetail currUser,
@@ -220,6 +240,10 @@ public class UserController {
             model.addAttribute("id", currUser.getId());
             model.addAttribute("balance", balanceService.findByUserId(currUser.getId()));
             return "addEditBalance";
+    }
+
+    public String Add_orChange_Balance_get() {
+        return "addEditBalance";
     }
 
     @PostMapping(path =  "/balance")
@@ -256,6 +280,10 @@ public class UserController {
         }
 
         return "ErorDogovor";
+    }
+
+    public String Add_orChange_Work_get() {
+        return "addEditWork";
     }
 
     @PostMapping(path =  "/work")
@@ -321,6 +349,10 @@ public class UserController {
         }
         model.addAttribute("id", currUser.getId());
         model.addAttribute("vir",vir);
+        return "virychka";
+    }
+
+    public String vir_test() {
         return "virychka";
     }
 
