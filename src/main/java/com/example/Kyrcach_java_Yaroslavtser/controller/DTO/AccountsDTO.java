@@ -1,6 +1,9 @@
 package com.example.Kyrcach_java_Yaroslavtser.controller.DTO;
 
+import com.example.Kyrcach_java_Yaroslavtser.model.NDS;
+import com.example.Kyrcach_java_Yaroslavtser.model.Operation;
 import com.example.Kyrcach_java_Yaroslavtser.model.OrderStatus;
+import com.example.Kyrcach_java_Yaroslavtser.model.Order_balance;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.User;
 
@@ -20,7 +23,7 @@ public class AccountsDTO {
 
 
     @Size(min = 8, max = 30)
-    private String goal;
+    private Operation goal;
 
 
     @Size(min = 3, max = 14)
@@ -29,16 +32,53 @@ public class AccountsDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
+    private int nalog;
     private OrderStatus status;
 
+    private Order_balance balance;
     private UserDTO userDTO;
 
+    private NDS nds;
 
+    private int pronds;
+
+    public int getNalog() {
+        return nalog;
+    }
+
+    public void setNalog(int nalog) {
+        this.nalog = nalog;
+    }
+
+    public Order_balance getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Order_balance balance) {
+        this.balance = balance;
+    }
+
+
+    public NDS getNds() {
+        return nds;
+    }
+
+    public void setNds(NDS nds) {
+        this.nds = nds;
+    }
+
+    public int getPronds() {
+        return pronds;
+    }
+
+    public void setPronds(int pronds) {
+        this.pronds = pronds;
+    }
 
     public AccountsDTO(){
 
     }
-    public AccountsDTO(Long id_accounts, String name_operat, String goal, int symm, UserDTO userDTO, OrderStatus status, Date date) {
+    public AccountsDTO(Long id_accounts, String name_operat, Operation goal, int symm, UserDTO userDTO, OrderStatus status, Date date, int nalog) {
         this.id_accounts = id_accounts;
         this.Name_operat = name_operat;
         this.goal = goal;
@@ -46,6 +86,7 @@ public class AccountsDTO {
         this.status = status;
         this.userDTO = userDTO;
         this.date = date;
+        this.nalog = nalog;
     }
 
 
@@ -81,11 +122,11 @@ public class AccountsDTO {
         Name_operat = name_operat;
     }
 
-    public String getGoal() {
+    public Operation getGoal() {
         return goal;
     }
 
-    public void setGoal(String goal) {
+    public void setGoal(Operation goal) {
         this.goal = goal;
     }
 

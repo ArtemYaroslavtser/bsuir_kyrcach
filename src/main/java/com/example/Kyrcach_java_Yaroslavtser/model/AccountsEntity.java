@@ -3,7 +3,6 @@ package com.example.Kyrcach_java_Yaroslavtser.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,7 +14,8 @@ public class AccountsEntity extends First_Entity {
     private String name_operat;
 
     @Column(name = "goal", length = 50)
-    private String goal;
+    @Enumerated(EnumType.STRING)
+    private Operation goal;
 
     @Column(name = "Symm", length = 15)
     private int Symm;
@@ -24,11 +24,23 @@ public class AccountsEntity extends First_Entity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-
+    @Column(name = "nalog")
+    private int nalog;
 
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
+
+    @Column(name = "status_balance")
+    @Enumerated(EnumType.STRING)
+    private Order_balance order_balance;
+
+    @Column(name = "NDS")
+    @Enumerated(EnumType.STRING)
+    private NDS nds;
+
+    @Column(name = "Pro_NDS")
+    private int pronds;
 
     public Date getDate() {
         return date;
@@ -36,6 +48,14 @@ public class AccountsEntity extends First_Entity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Order_balance getOrder_balance() {
+        return order_balance;
+    }
+
+    public void setOrder_balance(Order_balance order_balance) {
+        this.order_balance = order_balance;
     }
 
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -54,6 +74,31 @@ public class AccountsEntity extends First_Entity {
         this.accounts_ychetEntities = accounts_ychetEntities;
     }
 
+
+    public NDS getNds() {
+        return nds;
+    }
+
+    public void setNds(NDS nds) {
+        this.nds = nds;
+    }
+
+    public int getPronds() {
+        return pronds;
+    }
+
+    public void setPronds(int pronds) {
+        this.pronds = pronds;
+    }
+
+    public int getNalog() {
+        return nalog;
+    }
+
+    public void setNalog(int nalog) {
+        this.nalog = nalog;
+    }
+
     public String getName_operat() {
         return name_operat;
     }
@@ -62,13 +107,6 @@ public class AccountsEntity extends First_Entity {
         this.name_operat = name_operat;
     }
 
-    public String getGoal() {
-        return goal;
-    }
-
-    public void setGoal(String goal) {
-        this.goal = goal;
-    }
 
     public int getSymm() {
         return Symm;
@@ -94,13 +132,26 @@ public class AccountsEntity extends First_Entity {
         this.userEntity = userEntity;
     }
 
-    public AccountsEntity(String name_operat, String goal, int symm, OrderStatus status, UserEntity userEntity, Date date) {
+    public Operation getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Operation goal) {
+        this.goal = goal;
+    }
+
+
+    public AccountsEntity(String name_operat, Operation goal, int symm, OrderStatus status, UserEntity userEntity, Date date, int nalog, Order_balance order_balance, NDS nds, int pronds) {
         this.name_operat = name_operat;
         this.goal = goal;
         Symm = symm;
         this.status = status;
         this.userEntity = userEntity;
         this.date = date;
+        this.nalog = nalog;
+        this.order_balance = order_balance;
+        this.nds = nds;
+        this.pronds = pronds;
     }
 
     public AccountsEntity() {
@@ -114,5 +165,9 @@ public class AccountsEntity extends First_Entity {
         this.status = accounts.getStatus();
         this.userEntity = accounts.getUserEntity();
         this.date = accounts.getDate();
+        this.nalog = accounts.getNalog();
+        this.order_balance = accounts.getOrder_balance();
+        this.nds = accounts.getNds();
+        this.pronds = accounts.getPronds();
     }
 }

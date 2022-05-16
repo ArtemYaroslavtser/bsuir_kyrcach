@@ -88,57 +88,57 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td th:text="${byx_1.accounts.date}"></td>
-                            <td th:text="${byx_1.accounts.name_operat}"></td>
-                            <td th:text="${byx_1.accounts.goal}"></td>
-                            <td th:switch="${byx_1.accounts.status}">
-                                <p th:case="${vir}" th:text="${byx_1.accounts.symm}"> </p>
-                                <p th:case="${ras}">0</p>
-                            </td>
-                            <td >0</td>
-                            <td>0
-                            </td>
-                            <td></td>
-                            <td>0</td>
-                            <td th:switch="${byx_1.accounts.status}">
-                                <p th:case="${ras}" th:text="${byx_1.accounts.symm}"> </p>
-                                <p th:case="${vir}">0</p>
-                            </td>
-                            <td>0</td>
-
-                        </tr>
-                        <div th:with="nalogg = ${byx[0]}">
                         <tr th:each="answer : ${byx}">
-                            <td th:text="${answer.accounts.date}"></td>
-                            <td th:text="${answer.accounts.name_operat}"></td>
-                            <td th:text="${answer.accounts.goal}"></td>
-                            <td th:switch="${answer.accounts.status}">
-                                <p th:case="${vir}" th:text="${answer.accounts.symm}"> </p>
-                                <p th:case="${ras}">0</p>
+                                <td th:text="${answer.accounts.date}"></td>
+                                <td th:text="${answer.accounts.name_operat}"></td>
+                                <td th:text="${answer.accounts.goal}"></td>
+                            <td th:switch="${answer.accounts.order_balance}">
+                                <p th:case="${Doxod_1}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
+
                             </td>
-                            <td>0</td>
-                            <td>0
+
+                            <td th:switch="${answer.accounts.order_balance}">
+                                <p th:case="${Doxod_1}" th:text="${answer.accounts.nalog}"> </p>
+                                <p th:case="*">0</p>
                             </td>
-                            <td></td>
-                            <td>0</td>
-                            <td th:switch="${answer.accounts.status}">
-                                <p th:case="${ras}" th:text="${answer.accounts.symm}"> </p>
-                                <p th:case="${vir}">0</p>
+
+                            <td th:switch="${answer.accounts.order_balance}">
+                                <p th:case="${Doxod_2}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
                             </td>
-                            <td>0</td>
+
+                            <td th:switch="${answer.accounts.order_balance}">
+                                <p th:case="${Doxod_2}" th:text="${answer.accounts.nalog}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+                            <td th:switch="${answer.accounts.order_balance}">
+                                <p th:case="${Doxod_3}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+
+                            <td th:switch="${answer.accounts.order_balance}">
+                                <p th:case="${Rasxod_1}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+                            <td th:switch="${answer.accounts.order_balance}">
+                                <p th:case="${Rasxod_2}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
                         </tr>
-                        <tr>
+                            <tr>
                             <td colspan="3">Итого :</td>
                             <td th:text="${doxod}"></td>
+                            <td th:text="${nalog}"></td>
                             <td>0</td>
                             <td>0</td>
-                            <td></td>
                             <td>0</td>
                             <td th:text="${Rasxod}"></td>
                             <td>0</td>
-                        </tr>
-                        </div>
+                            </tr>
+
                         </tbody>
 
                     </table>

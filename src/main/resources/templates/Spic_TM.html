@@ -79,22 +79,14 @@
                             <label for="login" class="col-form-label" th:text="#{text.namework}"></label>
                             <input type="text" th:value="${account?.name_operat}" th:name="Name_operat" class="form-control"
                                    id="login" th:placeholder="#{text.namework}" autofocus required
-                                    maxlength="14"/>
+                                   maxlength="14"/>
                         </div>
                         <label for="firstName" class="col-form-label" th:text="#{text.operation}"></label>
                         <select class="form-group col-md-8" th:field="*{goal}" id="goal">
                             <option value="">Ничего не выбрано</option>
-                            <option th:value="${goal_1}"
-                                    th:text="${goal_1}">
-                            </option>
-                            <option th:value="${goal_2}"
-                                    th:text="${goal_2}">
-                            </option>
-                            <option th:value="${goal_3}"
-                                    th:text="${goal_3}">
-                            </option>
-                            <option th:value="${goal_4}"
-                                    th:text="${goal_4}">
+                            <option th:each="goal : ${T(com.example.Kyrcach_java_Yaroslavtser.model.Operation).values()}"
+                                    th:value="${goal}"
+                                    th:text="${goal}">
                             </option>
                         </select>
 

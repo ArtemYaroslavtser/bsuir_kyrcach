@@ -9,6 +9,7 @@ import com.example.Kyrcach_java_Yaroslavtser.Repositry.DogovorEntityRepository;
 import com.example.Kyrcach_java_Yaroslavtser.controller.DTO.*;
 import com.example.Kyrcach_java_Yaroslavtser.model.AccountsEntity;
 import com.example.Kyrcach_java_Yaroslavtser.model.DogovorStatus;
+import com.example.Kyrcach_java_Yaroslavtser.model.Operation;
 import com.example.Kyrcach_java_Yaroslavtser.model.OrderStatus;
 import com.example.Kyrcach_java_Yaroslavtser.security.CustomUserDetail;
 import com.example.Kyrcach_java_Yaroslavtser.service.AccountsService;
@@ -74,6 +75,10 @@ public class AccountsController {
         DogovorDTO dogovorDTO = dogovor.findByUserId(currUser.getId());
         if(dogovorDTO.getStatus() == DogovorStatus.Заключен) {
             String SertionValue = "";
+            model.addAttribute("goal_1",Operation.Оказание_услуги);
+            model.addAttribute("goal_2",Operation.Покупка_ТМЦ_для_оказания_услуги);
+            model.addAttribute("goal_3",Operation.Выплата_ЗП);
+            model.addAttribute("goal_4",Operation.Аренда_помещения);
             model.addAttribute("id", currUser.getId());
             model.addAttribute("userEntity", currUser);
             model.addAttribute("vibor_1", SertionValue);
@@ -106,11 +111,8 @@ public class AccountsController {
             return "accountsAdd";
         }
 
-        if(account.getStatus() == OrderStatus.Доходы) {
+
             accountsService.add_Accounts_by_Summ(account, currUser);
-        }else if (account.getStatus() == OrderStatus.Расходы){
-            accountsService.add_Accounts_by_Purchase(account, currUser);
-        }
         return "redirect:/home";
 
     }

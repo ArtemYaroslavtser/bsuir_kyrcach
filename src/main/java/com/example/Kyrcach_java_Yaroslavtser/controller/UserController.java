@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.*;
 
+
 @Controller
 @RequestMapping(value = "/users")
 public class UserController {
@@ -378,44 +379,35 @@ public class UserController {
     @GetMapping(path = "/byx_pr_id")
     public String byx_pr(Model model,Long id, Long id_user) {
         int Doxod = 0;
-        int nalog = 0;
         int Ras = 0;
-        int i = 0;
-        int[] nalog_1 = new int[1];
+        int nalog_1 = 0;
         Long id_ychet = 0L;
         Accounts_ychetEntity accounts_ychetEntity1 = null;
         List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId(id);
-        int[] nalog_ = new int[accounts_ychetEntitiList.size()];
         List<Accounts_ychetEntity> accounts_ychetEntitiList1 = accounts_ychetEntityRepository.findByYchetEntityId(id);
         for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
-            accounts_ychetEntity1 = accountsYchetEntity;
-            if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Доходы) {
-                Doxod = Doxod + accountsYchetEntity.getAccounts().getSymm();
-                nalog_[i] = (accountsYchetEntity.getAccounts().getSymm() *20)/120;
-                i++;
-            }
-            if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Расходы){
-                Ras = Ras + accountsYchetEntity.getAccounts().getSymm();
-            }
-        }
-        for( int j=0;j > nalog_[i];j++){
-            nalog= nalog + nalog_[j];
-        }
-        nalog_1[0] = nalog_[0];
+          {
+                if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Доходы) {
+                    Doxod = Doxod + accountsYchetEntity.getAccounts().getSymm();
+                    nalog_1 = nalog_1 + accountsYchetEntity.getAccounts().getNalog();
+                }
+                if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Расходы){
+                    Ras = Ras + accountsYchetEntity.getAccounts().getSymm();
+                }
+          }
 
-        for( int j=0;j-1 > nalog_[i];j++){
-            nalog_[j] = nalog_[j+1];
         }
-        accounts_ychetEntitiList.remove(accounts_ychetEntity1);
         model.addAttribute("id", id_user);
         model.addAttribute("byx",accounts_ychetEntitiList);
-        model.addAttribute("byx_1", accounts_ychetEntity1);
-        model.addAttribute("nalog_1", nalog_1[0]);
-        model.addAttribute("nalog", nalog_);
-        model.addAttribute("nalog_o", nalog);
+        model.addAttribute("nalog",nalog_1);
         model.addAttribute("vir", OrderStatus.Доходы);
         model.addAttribute("doxod", Doxod);
         model.addAttribute("ras", OrderStatus.Расходы);
+        model.addAttribute("Doxod_1", Order_balance.Доходы_от_реализации);
+        model.addAttribute("Doxod_2", Order_balance.Внереализованные_доходы);
+        model.addAttribute("Doxod_3", Order_balance.Иные_поступления);
+        model.addAttribute("Rasxod_1", Order_balance.Расходы);
+        model.addAttribute("Rasxod_2", Order_balance.Иные_расходы);
         model.addAttribute("Rasxod", Ras);
         return "byx_pr_id";
     }
@@ -510,7 +502,10 @@ public class UserController {
         model.addAttribute("Rasxod", Ras);
         return "kydir";
     }
-
+    @GetMapping(path = "/nds")
+    public String View_accounts(Model model) {
+        return "nds_vibor";
+    }
     public String kydir() {
         return "kydir";
     }
