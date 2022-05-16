@@ -57,7 +57,7 @@
 <input type="hidden" th:value="${id}" th:name="id">
 
 <div class="container my-5" style="width: 60vh">
-    <h3>Добавление работы</h3>
+    <h3>Добавление хозяйственной операции</h3>
     <div class="card">
         <div class="card-body">
             <div style="width: 80vh">
@@ -83,7 +83,7 @@
                         <div class="form-group col-md-8">
                             <label for="password" class="col-form-label" th:text="#{text.goal}"></label>
                             <input type="text" th:value="${account?.goal}" th:name="goal" class="form-control"
-                                   id="password" th:placeholder="#{text.goal}" autofocus required minlength="8"
+                                   id="password" th:placeholder="#{text.goal}" autofocus required minlength="4"
                                    maxlength="50"/>
                         </div>
 

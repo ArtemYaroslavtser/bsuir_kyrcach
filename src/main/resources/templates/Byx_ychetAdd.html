@@ -47,7 +47,7 @@
 <div th:replace="clientHeader :: client-header"></div>
 <input type="hidden" th:value="${id}" th:name="id">
 <div class="container my-5" style="width: 60vh">
-    <h3>Запрос на создание бухгалтерского учёта</h3>
+    <h3>Запрос на формирование КУДиРа за период</h3>
     <div class="card">
         <div class="card-body">
             <div style="width: 80vh">
@@ -57,17 +57,10 @@
                      <span class="error" th:text="#{text.correct.problem}">
                      </span>
                     </div>
+                    <h4>Первая дата - 01/01/2022, как дата начала календарного года</h4>
                     <span class="error"
                           th:text="#{${'text.error.' + apiError?.getMessage()}}"
                           th:unless="${apiError == null}">Nothing</span>
-                    <div class="form-group col-md-8">
-                        <label for="firstName1" class="col-form-label" th:text="#{text.bux.add.datafirst}"></label>
-                        <input type="date" th:value="${bux?.dateFirst}"  th:name="dateFirst" class="form-control"
-                               id="firstName1" th:placeholder="#{text.byx_add_first_date}" autofocus required
-
-                        />
-                        <span class="form__error" th:text="#{text.byx_add_first_date}"></span>
-                    </div>
                     <div class="form-group col-md-8">
                         <label for="firstName2" class="col-form-label" th:text="#{text.bux.add.dataSecond}"></label>
                         <input type="date" th:value="${bux?.dateSecond}" th:name="dateSecond" class="form-control"

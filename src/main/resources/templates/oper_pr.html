@@ -66,7 +66,6 @@
                             <th>Первая дата</th>
                             <th>Общая сумма задействованных средств</th>
                             <th>Сумма вырочки</th>
-                            <th>Вид учёта</th>
                             <th>Статус учёта</th>
                             <th></th>
                         </tr>
@@ -76,7 +75,6 @@
                             <td th:text="${answer.ychetEntity.dateFirst}"></td>
                             <td th:text="${answer.byx_balance}"></td>
                             <td th:text="${answer.viruchka}"></td>
-                            <td th:text="${answer.ychetEntity.status}"></td>
                             <td th:text="${answer.ychetEntity.ychetStatus_admin}"></td>
                             <td>
                                 <form action="#" th:action="@{'/users/oper_pr'}" th:method="post" >

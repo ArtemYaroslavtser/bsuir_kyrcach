@@ -64,6 +64,7 @@
                         <thead>
                         <tr>
                             <th>Первая дата</th>
+                            <th>Вторая дата</th>
                             <th>Общая сумма задействованных средств</th>
                             <th>Сумма вырочки клиента</th>
                             <th>Вид учёта</th>
@@ -74,6 +75,7 @@
                         <tbody>
                         <tr th:each="answer : ${byx}">
                             <td th:text="${answer.ychetEntity.dateFirst}"></td>
+                            <td th:text="${answer.ychetEntity.dateSecond}"></td>
                             <td th:text="${answer.byx_balance}"></td>
                             <td th:text="${answer.viruchka}"></td>
                             <td th:text="${answer.ychetEntity.status}"></td>

@@ -20,10 +20,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/users")
@@ -153,9 +150,13 @@ public class UserController {
     public String Byx_add(Model model,@AuthenticationPrincipal CustomUserDetail currentUser) {
         DogovorDTO dogovorDTO = dogovor.findByUserId(currentUser.getId());
         if(dogovorDTO.getStatus() == DogovorStatus.Заключен) {
+          //  Date date = new Date("2021-Января-01");
+            YchetDTO ychetDTO = new YchetDTO();
+            //ychetDTO.setDateFirst(date);
             model.addAttribute("id", currentUser.getId());
             model.addAttribute("userEntity", currentUser);
-            model.addAttribute("bux", new YchetDTO());
+            model.addAttribute("bux", ychetDTO);
+
             return "Byx_ychetAdd";
         }
         return "ErorDogovor";
@@ -182,7 +183,6 @@ public class UserController {
             model.addAttribute("apiError", apiError);
             return "Byx_ychetAdd";
         }
-
         accounts_ychetService.add_Byx(ychetDTO,ychetService.add_Ychet_by_Byx(ychetDTO,currUser));
         return "redirect:/home";
     }
@@ -334,7 +334,7 @@ public class UserController {
         int vir = 0;
         List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByUserEntityId(currUser.getId());
         for (AccountsEntity accountsEntity : accountsEntityList) {
-            if(accountsEntity.getStatus() == OrderStatus.Выручка) {
+            if(accountsEntity.getStatus() == OrderStatus.Доходы) {
             vir = vir + accountsEntity.getSymm();
             }
             if(accountsEntity.getStatus() == OrderStatus.Расходы) {
@@ -377,16 +377,46 @@ public class UserController {
 
     @GetMapping(path = "/byx_pr_id")
     public String byx_pr(Model model,Long id, Long id_user) {
+        int Doxod = 0;
+        int nalog = 0;
+        int Ras = 0;
+        int i = 0;
+        int[] nalog_1 = new int[1];
         Long id_ychet = 0L;
         Accounts_ychetEntity accounts_ychetEntity1 = null;
         List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId(id);
+        int[] nalog_ = new int[accounts_ychetEntitiList.size()];
+        List<Accounts_ychetEntity> accounts_ychetEntitiList1 = accounts_ychetEntityRepository.findByYchetEntityId(id);
         for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
             accounts_ychetEntity1 = accountsYchetEntity;
+            if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Доходы) {
+                Doxod = Doxod + accountsYchetEntity.getAccounts().getSymm();
+                nalog_[i] = (accountsYchetEntity.getAccounts().getSymm() *20)/120;
+                i++;
+            }
+            if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Расходы){
+                Ras = Ras + accountsYchetEntity.getAccounts().getSymm();
+            }
+        }
+        for( int j=0;j > nalog_[i];j++){
+            nalog= nalog + nalog_[j];
+        }
+        nalog_1[0] = nalog_[0];
+
+        for( int j=0;j-1 > nalog_[i];j++){
+            nalog_[j] = nalog_[j+1];
         }
         accounts_ychetEntitiList.remove(accounts_ychetEntity1);
         model.addAttribute("id", id_user);
         model.addAttribute("byx",accounts_ychetEntitiList);
         model.addAttribute("byx_1", accounts_ychetEntity1);
+        model.addAttribute("nalog_1", nalog_1[0]);
+        model.addAttribute("nalog", nalog_);
+        model.addAttribute("nalog_o", nalog);
+        model.addAttribute("vir", OrderStatus.Доходы);
+        model.addAttribute("doxod", Doxod);
+        model.addAttribute("ras", OrderStatus.Расходы);
+        model.addAttribute("Rasxod", Ras);
         return "byx_pr_id";
     }
 
@@ -424,16 +454,28 @@ public class UserController {
 
     @GetMapping(path = "/oper_pr_id")
     public String oper_pr(Model model,Long id, Long id_user) {
+        int Doxod = 0;
+        int Ras = 0;
         Long id_ychet = 0L;
         Accounts_ychetEntity accounts_ychetEntity1 = null;
         List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId(id);
         for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
             accounts_ychetEntity1 = accountsYchetEntity;
+            if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Доходы) {
+                Doxod = Doxod + accountsYchetEntity.getAccounts().getSymm();
+            }
+            if(accountsYchetEntity.getAccounts().getStatus() == OrderStatus.Расходы){
+                Ras = Ras + accountsYchetEntity.getAccounts().getSymm();
+            }
         }
         accounts_ychetEntitiList.remove(accounts_ychetEntity1);
         model.addAttribute("id", id_user);
         model.addAttribute("byx",accounts_ychetEntitiList);
         model.addAttribute("byx_1", accounts_ychetEntity1);
+        model.addAttribute("vir", OrderStatus.Доходы);
+        model.addAttribute("doxod", Doxod);
+        model.addAttribute("ras", OrderStatus.Расходы);
+        model.addAttribute("Rasxod", Ras);
         return "oper_pr_id";
     }
 
@@ -447,14 +489,25 @@ public class UserController {
     @GetMapping(path = "/KYDIR")
     public String kydir(Model model, @AuthenticationPrincipal CustomUserDetail currUser) {
         List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByUserEntityId(currUser.getId());
-
+        int Doxod = 0;
+        int Ras = 0;
         AccountsEntity accountsEntity1 = null;
         for (AccountsEntity accountsEntity :  accountsEntityList) {
             accountsEntity1 = accountsEntity;
+            if(accountsEntity.getStatus() == OrderStatus.Доходы) {
+                Doxod = Doxod + accountsEntity.getSymm();
+            }
+            if(accountsEntity.getStatus() == OrderStatus.Расходы){
+                Ras = Ras + accountsEntity.getSymm();
+            }
         }
         accountsEntityList.remove(accountsEntity1);
         model.addAttribute("byx", accountsEntityList);
         model.addAttribute("byx_1", accountsEntity1);
+        model.addAttribute("vir", OrderStatus.Доходы);
+        model.addAttribute("doxod", Doxod);
+        model.addAttribute("ras", OrderStatus.Расходы);
+        model.addAttribute("Rasxod", Ras);
         return "kydir";
     }
 

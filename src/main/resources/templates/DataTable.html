@@ -63,10 +63,11 @@
                     <table class="table table-striped table-responsive-md">
                         <thead>
                         <tr>
-                            <th>Название операции</th>
-                            <th>Цель операции</th>
+                            <th>Договор</th>
+                            <th>Содержание операции</th>
                             <th>Сумма</th>
                             <th>Вид операции</th>
+                            <th>Дата операции</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -75,6 +76,7 @@
                             <td th:text="${answer.goal}"></td>
                             <td th:text="${answer.symm}"></td>
                             <td th:text="${answer.status}"></td>
+                            <td th:text="${answer.date}"></td>
                             <td>
                                 <form action="#" th:action="@{'/offeredAnswers/'}" th:method="post" >
                                     <input type="hidden" name="_method" value="delete" />

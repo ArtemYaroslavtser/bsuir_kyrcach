@@ -68,10 +68,17 @@
 
                         />
                         <span class="form__error" th:text="#{text.byx_add_first_date}"></span>
+                    </div>
+                        <div class="form-group col-md-8">
+                            <label for="firstName2" class="col-form-label" th:text="#{text.bux.add.dataSecond}"></label>
+                            <input type="date" th:value="${bux?.dateSecond}" th:name="dateSecond" class="form-control"
+                                   id="firstName2" th:placeholder="#{text.byx_add_second_date}" autofocus required
 
+                            />
+                            <span class="form__error" th:text="#{text.byx_add_second_date}"></span>
+                        </div>
                     <div class="col-md-6">
                         <input type="submit" class="btn btn-primary" th:value="#{bt.bux}">
-                    </div>
                     </div>
                 </form>
             </div>

@@ -42,6 +42,10 @@
                 font-size: 3.5rem;
             }
         }
+        tr,th {
+            padding: 3px;
+            border: 1px solid black;
+        }
     </style>
 
 
@@ -52,9 +56,8 @@
 <body>
 
 <div th:replace="clientHeader :: client-header"></div>
-<input type="hidden" th:value="${id}" th:name="currUser">
+<input type="hidden" th:value="${id}" th:name="id">
 <main role="main" class="container">
-
     <div class="alert alert-secondary text-center">
         <div th:switch="${byx}" class="container my-7">
             <div class="col-md-12">
@@ -63,47 +66,80 @@
                     <table class="table table-striped table-responsive-md">
                         <thead>
                         <tr>
-                            <th>Первая дата</th>
-                            <th>Вторая дата</th>
-                            <th>Работа</th>
-                            <th>Общая сумма задействованных средств</th>
-                            <th>Сумма вырочки</th>
-                            <th>Вид учёта</th>
-                            <th>Статус учёта</th>
-                            <th>Имя выполненной работы</th>
-                            <th>Цель выполненной рабаоты</th>
-                            <th>Дата выполнения</th>
-                            <th>Сумма выполненной работы</th>
+                            <th rowspan="3">Дата записи</th>
+                            <th rowspan="3">Наименование документа, его номер</th>
+                            <th rowspan="3">Содержание хозяйсвтенной операции</th>
+                            <th colspan="5">Доходы</th>
+                            <th colspan="2">Расходы</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Доходы от реализации</th>
+                            <th colspan="2">Внереализационные доходы</th>
+                            <th rowspan="2"> Иные поступления</th>
+                            <th rowspan="2"> Расходы приходящиеся на отченый период</th>
+                            <th rowspan="2"> Иные расходы</th>
+                        </tr>
+                        <tr>
+                            <th>Сумма</th>
+                            <th>Сумма налогов, сборов уплачиваемых из выручки</th>
+                            <th>Сумма</th>
+                            <th>Сумма налогов,сборов уплачиваемых из выручки</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                        <td th:text="${byx_1.ychetEntity.dateFirst}"></td>
-                        <td th:text="${byx_1.ychetEntity.dateSecond}"></td>
-                        <td th:text="${byx_1.accounts.userEntity.work_ipEntity.name_work}"></td>
-                        <td th:text="${byx_1.byx_balance}"></td>
-                        <td th:text="${byx_1.viruchka}"></td>
-                        <td th:text="${byx_1.ychetEntity.status}"></td>
-                        <td th:text="${byx_1.ychetEntity.ychetStatus_admin}"></td>
+                            <td th:text="${byx_1.accounts.date}"></td>
                             <td th:text="${byx_1.accounts.name_operat}"></td>
                             <td th:text="${byx_1.accounts.goal}"></td>
-                            <td th:text="${byx_1.accounts.date}"></td>
-                            <td th:text="${byx_1.accounts.symm}"></td>
+                            <td th:switch="${byx_1.accounts.status}">
+                                <p th:case="${vir}" th:text="${byx_1.accounts.symm}"> </p>
+                                <p th:case="${ras}">0</p>
+                            </td>
+                            <td >0</td>
+                            <td>0
+                            </td>
+                            <td></td>
+                            <td>0</td>
+                            <td th:switch="${byx_1.accounts.status}">
+                                <p th:case="${ras}" th:text="${byx_1.accounts.symm}"> </p>
+                                <p th:case="${vir}">0</p>
+                            </td>
+                            <td>0</td>
+
                         </tr>
+                        <div th:with="nalogg = ${byx[0]}">
                         <tr th:each="answer : ${byx}">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td th:text="${answer.accounts.date}"></td>
                             <td th:text="${answer.accounts.name_operat}"></td>
                             <td th:text="${answer.accounts.goal}"></td>
-                            <td th:text="${answer.accounts.date}"></td>
-                            <td th:text="${answer.accounts.symm}"></td>
+                            <td th:switch="${answer.accounts.status}">
+                                <p th:case="${vir}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="${ras}">0</p>
+                            </td>
+                            <td>0</td>
+                            <td>0
+                            </td>
+                            <td></td>
+                            <td>0</td>
+                            <td th:switch="${answer.accounts.status}">
+                                <p th:case="${ras}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="${vir}">0</p>
+                            </td>
+                            <td>0</td>
                         </tr>
+                        <tr>
+                            <td colspan="3">Итого :</td>
+                            <td th:text="${doxod}"></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td></td>
+                            <td>0</td>
+                            <td th:text="${Rasxod}"></td>
+                            <td>0</td>
+                        </tr>
+                        </div>
                         </tbody>
+
                     </table>
                 </div>
             </div>

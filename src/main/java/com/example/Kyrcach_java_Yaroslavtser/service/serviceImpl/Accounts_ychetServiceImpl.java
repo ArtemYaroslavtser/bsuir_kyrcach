@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,10 +34,12 @@ public class Accounts_ychetServiceImpl implements Accounts_ychetService {
 
         int viruchka = 0;
         int byx_balance = 0;
-        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDate(ychetDTO.getDateFirst(), ychetEntity.getUserEntity1().getId());
-        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDate(ychetDTO.getDateFirst(), ychetEntity.getUserEntity1().getId());
+        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
+
+        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
+
         for (AccountsEntity accountsEntity : accountsEntityList1) {
-            if(accountsEntity.getStatus() == OrderStatus.Выручка) {
+            if(accountsEntity.getStatus() == OrderStatus.Доходы) {
                 viruchka = viruchka + accountsEntity.getSymm();
             }
             if(accountsEntity.getStatus() == OrderStatus.Расходы){
@@ -63,12 +66,13 @@ public class Accounts_ychetServiceImpl implements Accounts_ychetService {
 
         int viruchka = 0;
         int byx_balance = 0;
-
-
-        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
+        System.out.println(ychetDTO.getDateSecond());
+        Date date = new Date(122,0,1);
+        System.out.println(date);
+        List<AccountsEntity> accountsEntityList1 = accountsEntityRepository.findAllByDateFirstandSecond(date, ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
 
         for (AccountsEntity accountsEntity : accountsEntityList1) {
-            if(accountsEntity.getStatus() == OrderStatus.Выручка) {
+            if(accountsEntity.getStatus() == OrderStatus.Доходы) {
                 viruchka = viruchka + accountsEntity.getSymm();
             }
             if(accountsEntity.getStatus() == OrderStatus.Расходы){
@@ -77,7 +81,7 @@ public class Accounts_ychetServiceImpl implements Accounts_ychetService {
             byx_balance = byx_balance + accountsEntity.getSymm();
         }
 
-        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDateFirstandSecond(ychetDTO.getDateFirst(), ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
+        List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDateFirstandSecond(date, ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
         for (AccountsEntity accountsEntity : accountsEntityList) {
             Accounts_ychetEntity accounts_ychetEntity = new Accounts_ychetEntity();
             accounts_ychetEntity.setAccounts(accountsEntity);
