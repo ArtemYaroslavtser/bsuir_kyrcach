@@ -106,7 +106,7 @@ public class AccountsController {
             return "accountsAdd";
         }
 
-        if(account.getStatus() == OrderStatus.Выручка) {
+        if(account.getStatus() == OrderStatus.Доходы) {
             accountsService.add_Accounts_by_Summ(account, currUser);
         }else if (account.getStatus() == OrderStatus.Расходы){
             accountsService.add_Accounts_by_Purchase(account, currUser);

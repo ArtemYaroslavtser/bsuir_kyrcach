@@ -83,7 +83,7 @@ public class AccountsServiceImpl implements AccountsService {
         accountsEntity.setGoal(accountsDTO.getGoal());
         accountsEntity.setSymm(accountsDTO.getSymm());
         accountsEntity.setUserEntity(userRepository.findByLogin(currUser.getLogin()));
-        accountsEntity.setStatus(OrderStatus.Выручка);
+        accountsEntity.setStatus(OrderStatus.Доходы);
         accountsEntity.setDate(accountsDTO.getDate());
         accountsEntityRepository.save(accountsEntity);
     }

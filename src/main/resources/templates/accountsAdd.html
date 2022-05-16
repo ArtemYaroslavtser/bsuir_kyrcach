@@ -9,6 +9,7 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/carousel/">
     <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <!-- Bootstrap core CSS -->
     <!-- Favicons -->
@@ -57,7 +58,7 @@
 <input type="hidden" th:value="${id}" th:name="id">
 
 <div class="container my-5" style="width: 60vh">
-    <h3>Добавление работы</h3>
+    <h3>Добавление хозяйственной операции</h3>
     <div class="card">
         <div class="card-body">
             <div style="width: 80vh">
@@ -83,7 +84,7 @@
                         <div class="form-group col-md-8">
                             <label for="password" class="col-form-label" th:text="#{text.goal}"></label>
                             <input type="text" th:value="${account?.goal}" th:name="goal" class="form-control"
-                                   id="password" th:placeholder="#{text.goal}" autofocus required minlength="8"
+                                   id="password" th:placeholder="#{text.goal}" autofocus required minlength="4"
                                    maxlength="50"/>
                         </div>
 

@@ -9,6 +9,7 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/carousel/">
     <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <!-- Bootstrap core CSS -->
     <!-- Favicons -->
@@ -42,6 +43,10 @@
                 font-size: 3.5rem;
             }
         }
+        tr,th {
+            padding: 3px;
+            border: 1px solid black;
+        }
     </style>
 
 
@@ -62,36 +67,74 @@
                     <table class="table table-striped table-responsive-md">
                         <thead>
                         <tr>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Работа</th>
-                            <th>Имя акта работы</th>
-                            <th>Цель акта работы</th>
-                            <th>Сумма выполненной работы</th>
-                            <th>Тип полученных средств</th>
-                            <th>Дата выполнения</th>
+                            <th rowspan="3">Дата записи</th>
+                            <th rowspan="3">Наименование документа, его номер</th>
+                            <th rowspan="3">Содержание хозяйсвтенной операции</th>
+                            <th colspan="5">Доходы</th>
+                            <th colspan="2">Расходы</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Доходы от реализации</th>
+                            <th colspan="2">Внереализационные доходы</th>
+                            <th rowspan="2"> Иные поступления</th>
+                            <th rowspan="2"> Расходы приходящиеся на отченый период</th>
+                            <th rowspan="2"> Иные расходы</th>
+                        </tr>
+                        <tr>
+                            <th>Сумма</th>
+                            <th>Сумма налогов, сборов уплачиваемых из выручки</th>
+                            <th>Сумма</th>
+                            <th>Сумма налогов,сборов уплачиваемых из выручки</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td th:text="${byx_1.userEntity.firstName}"></td>
-                            <td th:text="${byx_1.userEntity.lastName}"></td>
-                            <td th:text="${byx_1.userEntity.work_ipEntity.name_work}"></td>
+                            <td th:text="${byx_1.date}"></td>
                             <td th:text="${byx_1.name_operat}"></td>
                             <td th:text="${byx_1.goal}"></td>
-                            <td th:text="${byx_1.symm}"></td>
-                            <td th:text="${byx_1.status}"></td>
-                            <td th:text="${byx_1.date}"></td>
+                            <td th:switch="${byx_1.status}">
+                                <p th:case="${vir}" th:text="${byx_1.symm}"> </p>
+                                <p th:case="${ras}">0</p>
+                            </td>
+                            <td></td>
+                            <td>0
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td th:switch="${byx_1.status}">
+                                <p th:case="${ras}" th:text="${byx_1.symm}"> </p>
+                                <p th:case="${vir}">0</p>
+                            </td>
+                            <td></td>
+
                         </tr>
                         <tr th:each="answer : ${byx}">
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td th:text="${answer.date}"></td>
                             <td th:text="${answer.name_operat}"></td>
                             <td th:text="${answer.goal}"></td>
-                            <td th:text="${answer.symm}"></td>
-                            <td th:text="${answer.status}"></td>
-                            <td th:text="${answer.date}"></td>
+                            <td th:switch="${answer.status}">
+                                <p th:case="${vir}" th:text="${answer.symm}"> </p>
+                                <p th:case="${ras}">0</p>
+                            </td>
+                            <td></td>
+                            <td> 0
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td th:switch="${answer.status}">
+                                <p th:case="${ras}" th:text="${answer.symm}"> </p>
+                                <p th:case="${vir}">0</p>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Итого :</td>
+                            <td th:text="${doxod}"></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td th:text="${Rasxod}"></td>
                         </tr>
                         </tbody>
                     </table>

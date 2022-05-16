@@ -12,6 +12,8 @@ import com.example.Kyrcach_java_Yaroslavtser.service.YchetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class YchetServiceImpl implements YchetService {
 
@@ -29,12 +31,12 @@ public class YchetServiceImpl implements YchetService {
 
     @Override
     public YchetEntity add_Ychet_by_Byx(YchetDTO ychetDTO, CustomUserDetail currUser) {
-
+        Date date = new Date(122,0,1);
         YchetEntity ychetEntity = new YchetEntity();
         ychetEntity.setWork(workEntityRepository.getname_workByOwnerId(currUser.getId()));
         ychetEntity.setUserEntity1(userRepository.findByLogin(currUser.getLogin()));
         ychetEntity.setStatus(YchetStatus.Бухгалтерский);
-        ychetEntity.setDateFirst(ychetDTO.getDateFirst());
+        ychetEntity.setDateFirst(date);
         ychetEntity.setDateSecond(ychetDTO.getDateSecond());
         ychetEntity.setYchetStatus_admin(YchetStatus_admin.Не_оформлен);
         ychetEntityRepository.save(ychetEntity);
