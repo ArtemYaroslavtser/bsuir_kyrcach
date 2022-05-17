@@ -506,6 +506,205 @@ public class UserController {
     public String View_accounts(Model model) {
         return "nds_vibor";
     }
+
+    @GetMapping(path = "/NDS_YCH")
+    public String NDS_YCH(Model model,@AuthenticationPrincipal CustomUserDetail currUser) {
+        int promeh = 0;
+        int Nds = 0;
+        List<Accounts_ychetEntity> accounts_ychetEntityList = accounts_ychetEntityRepository.findByYchetEntityId_(currUser.getId(), NDS_oplata.УСН, 0);
+        for (Accounts_ychetEntity accountsYchetEntity :  accounts_ychetEntityList) {
+            promeh = promeh + accountsYchetEntity.getAccounts().getSymm();
+        }
+        Nds = promeh * 6/100;
+        model.addAttribute("id",currUser.getId());
+        model.addAttribute("Nds",Nds);
+        model.addAttribute("byx",accounts_ychetEntityList);
+        return "NDS_YCH";
+    }
+
+    @GetMapping(path = "/NDS_YCH/reg")
+    public String NDS_YCH_post(Model model, @AuthenticationPrincipal CustomUserDetail currUser) {
+        int promeh = 0;
+        int Nds = 0;
+        Accounts_ychetEntity accountsYchetEntity1 = new Accounts_ychetEntity();
+        List<Accounts_ychetEntity> accounts_ychetEntityList = accounts_ychetEntityRepository.findByYchetEntityId_(currUser.getId(), NDS_oplata.УСН,0);
+        for (Accounts_ychetEntity accountsYchetEntity :  accounts_ychetEntityList) {
+            promeh = promeh + accountsYchetEntity.getAccounts().getSymm();
+            accountsYchetEntity1 = accountsYchetEntity;
+            accountsYchetEntity.getAccounts().setNDS_YES(1);
+            accounts_ychetEntityRepository.save(accountsYchetEntity);
+        }
+        Nds = promeh * 6/100;
+        accountsService.add_Accounts_by_YSH(accountsYchetEntity1,Nds);
+        return "home";
+
+    }
+    @GetMapping(path = "/NDS_Pod")
+    public String NDS_Pod(Model model, @AuthenticationPrincipal CustomUserDetail currUser) {
+        int promeh = 0;
+        int Nds = 0;
+        int minus = 0;
+        int minus_2 = 0;
+        List<Accounts_ychetEntity> accounts_ychetEntityList = accounts_ychetEntityRepository.findByYchetEntityId_1(currUser.getId(),0);
+        for (Accounts_ychetEntity accountsYchetEntity :  accounts_ychetEntityList) {
+            if(accountsYchetEntity.getAccounts().getGoal() == Operation.Оказание_услуги){
+                if(accountsYchetEntity.getAccounts().getNds_oplata() == NDS_oplata.Подоходный_налог){
+                    promeh = promeh + accountsYchetEntity.getAccounts().getSymm();
+                }
+            }
+            if(accountsYchetEntity.getAccounts().getGoal() == Operation.Покупка_ТМЦ_для_оказания_услуги || accountsYchetEntity.getAccounts().getGoal() == Operation.Выплата_ЗП || accountsYchetEntity.getAccounts().getGoal() == Operation.Аренда_помещения ) {
+                minus = minus + accountsYchetEntity.getAccounts().getSymm() + accountsYchetEntity.getAccounts().getNalog();
+            }
+        }
+        List<Accounts_ychetEntity> accountsYchetEntity = accounts_ychetEntityRepository.findByYchetEntityId_Vit(currUser.getId(),Operation.Перечислен_НДС);
+        for (Accounts_ychetEntity accountsYchetEntity1 :  accountsYchetEntity) {
+            minus_2 = minus_2 + accountsYchetEntity1.getAccounts().getSymm();
+        }
+
+        Nds = (promeh - minus - minus_2)*16/100;
+        model.addAttribute("id",currUser.getId());
+        model.addAttribute("Nds",32);
+        model.addAttribute("byx",accounts_ychetEntityList);
+        return "NDS_Pod";
+    }
+
+    @GetMapping(path = "/NDS_Pod/reg")
+    public String NDS_Pod_post(Model model,@AuthenticationPrincipal CustomUserDetail currUser) {
+        int promeh = 0;
+        int Nds = 0;
+        int minus = 0;
+        int minus_2 = 0;
+        Accounts_ychetEntity accountsYchetEntity3 = new Accounts_ychetEntity();
+        List<Accounts_ychetEntity> accounts_ychetEntityList = accounts_ychetEntityRepository.findByYchetEntityId_1(currUser.getId(),0);
+        for (Accounts_ychetEntity accountsYchetEntity :  accounts_ychetEntityList) {
+            if(accountsYchetEntity.getAccounts().getGoal() == Operation.Оказание_услуги){
+                if(accountsYchetEntity.getAccounts().getNds_oplata() == NDS_oplata.Подоходный_налог){
+                    promeh = promeh + accountsYchetEntity.getAccounts().getSymm();
+                }
+            }
+            if(accountsYchetEntity.getAccounts().getGoal() == Operation.Покупка_ТМЦ_для_оказания_услуги || accountsYchetEntity.getAccounts().getGoal() == Operation.Выплата_ЗП || accountsYchetEntity.getAccounts().getGoal() == Operation.Аренда_помещения ) {
+                minus = minus + accountsYchetEntity.getAccounts().getSymm() + accountsYchetEntity.getAccounts().getNalog();
+            }
+            accountsYchetEntity3 = accountsYchetEntity;
+        }
+        List<Accounts_ychetEntity> accountsYchetEntity = accounts_ychetEntityRepository.findByYchetEntityId_Vit(currUser.getId(),Operation.Перечислен_НДС);
+        for (Accounts_ychetEntity accountsYchetEntity1 :  accountsYchetEntity) {
+            minus_2 = minus_2 + accountsYchetEntity1.getAccounts().getSymm();
+        }
+
+        Nds = (promeh - minus - minus_2)*16/100;
+        accountsService.add_Accounts_by_POD(accountsYchetEntity3,32);
+        return "home";
+    }
+
+    @GetMapping(path = "/nds_yplat")
+    public String NDS_yplat(Model model, @AuthenticationPrincipal CustomUserDetail currUser) {
+        int promeh = 0;
+        int Nds = 0;
+        int Nds_i= 0;
+        int Nds_1 = 0;
+        int minus = 0;
+        List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId_AndRole(currUser.getId(), Operation.Покупка_ТМЦ_для_оказания_услуги, Operation.Аренда_помещения);
+        for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
+            Nds = Nds + accountsYchetEntity.getAccounts().getNalog();
+        }
+        List<Accounts_ychetEntity> accounts_ychetEntitiList1 = accounts_ychetEntityRepository.findByYchetEntityId(currUser.getId(), Operation.Оказание_услуги, NDS_oplata.Подоходный_налог);
+        for (Accounts_ychetEntity accountsYchetEntity1 : accounts_ychetEntitiList1) {
+            Nds_1 = Nds_1 + accountsYchetEntity1.getAccounts().getNalog();
+        }
+        Nds_i = Nds_1 - Nds ;
+        model.addAttribute("id",currUser.getId());
+        model.addAttribute("Nds",Nds_i);
+        return "nds_yplat";
+    }
+
+    @GetMapping(path = "/NDS_yplat/reg")
+    public String NDS_yplat_post(Model model,@AuthenticationPrincipal CustomUserDetail currUser) {
+        int promeh = 0;
+        int Nds = 0;
+        int Nds_i= 0;
+        int Nds_1 = 0;
+        int minus = 0;
+        List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId_AndRole(currUser.getId(), Operation.Покупка_ТМЦ_для_оказания_услуги, Operation.Аренда_помещения);
+        for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
+            Nds = Nds + accountsYchetEntity.getAccounts().getNalog();
+        }
+        List<Accounts_ychetEntity> accounts_ychetEntitiList1 = accounts_ychetEntityRepository.findByYchetEntityId(currUser.getId(), Operation.Оказание_услуги, NDS_oplata.Подоходный_налог);
+        for (Accounts_ychetEntity accountsYchetEntity1 : accounts_ychetEntitiList1) {
+            Nds_1 = Nds_1 + accountsYchetEntity1.getAccounts().getNalog();
+        }
+        Nds_i = Nds_1 - Nds ;
+        Accounts_ychetEntity accountsYchetEntity1 = new Accounts_ychetEntity();
+        List<Accounts_ychetEntity> accounts_ychetEntityList = accounts_ychetEntityRepository.findByYchetEntityId_(currUser.getId(), NDS_oplata.Подоходный_налог,0);
+        for (Accounts_ychetEntity accountsYchetEntity :  accounts_ychetEntityList) {
+            promeh = promeh + accountsYchetEntity.getAccounts().getSymm();
+            accountsYchetEntity1 = accountsYchetEntity;
+        }
+        accountsService.add_Accounts_by_Dov(accountsYchetEntity1,Nds_i);
+        return "home";
+    }
+
+    @GetMapping(path = "/nds_vit")
+    public String nds(Model model,@AuthenticationPrincipal CustomUserDetail currUser) {
+        int Doxod = 0;
+        int St_b = 0;
+        int Nds = 0;
+        Long id_ychet = 0L;
+        List<Accounts_ychetEntity> accounts_ychetEntitie = null;
+        List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId_AndRole(currUser.getId(), Operation.Покупка_ТМЦ_для_оказания_услуги, Operation.Аренда_помещения);
+        for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
+                Doxod = Doxod + accountsYchetEntity.getAccounts().getSymm();
+                Nds = Nds + accountsYchetEntity.getAccounts().getNalog();
+        }
+        St_b = Doxod + Nds;
+        model.addAttribute("id", currUser.getId());
+        model.addAttribute("byx",accounts_ychetEntitiList);
+        model.addAttribute("vir", OrderStatus.Доходы);
+        model.addAttribute("Tw", 20);
+        model.addAttribute("Ten", 10);
+        model.addAttribute("Zero",0);
+        model.addAttribute("doxod", St_b);
+        model.addAttribute("St_b", Doxod);
+        model.addAttribute("Nds", Nds);
+        model.addAttribute("ras", OrderStatus.Расходы);
+        model.addAttribute("Doxod_1", Order_balance.Доходы_от_реализации);
+        model.addAttribute("Doxod_2", Order_balance.Внереализованные_доходы);
+        model.addAttribute("Doxod_3", Order_balance.Иные_поступления);
+        model.addAttribute("Rasxod_1", Order_balance.Расходы);
+        model.addAttribute("Rasxod_2", Order_balance.Иные_расходы);
+        return "nds_vicet";
+    }
+
+    @GetMapping(path = "/nds_dobav")
+    public String nds_dobav(Model model,@AuthenticationPrincipal CustomUserDetail currUser) {
+        int Doxod = 0;
+        int St_b = 0;
+        int Nds = 0;
+        Long id_ychet = 0L;
+        List<Accounts_ychetEntity> accounts_ychetEntitie = null;
+        List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId(currUser.getId(), Operation.Оказание_услуги, NDS_oplata.Подоходный_налог);
+        for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
+            Doxod = Doxod + accountsYchetEntity.getAccounts().getSymm();
+            Nds = Nds + accountsYchetEntity.getAccounts().getNalog();
+        }
+        St_b = Doxod - Nds;
+        model.addAttribute("id", currUser.getId());
+        model.addAttribute("byx",accounts_ychetEntitiList);
+        model.addAttribute("vir", OrderStatus.Доходы);
+        model.addAttribute("Tw", 20);
+        model.addAttribute("Ten", 10);
+        model.addAttribute("Zero",0);
+        model.addAttribute("doxod", Doxod);
+        model.addAttribute("St_b", St_b);
+        model.addAttribute("Nds", Nds);
+        model.addAttribute("ras", OrderStatus.Расходы);
+        model.addAttribute("Doxod_1", Order_balance.Доходы_от_реализации);
+        model.addAttribute("Doxod_2", Order_balance.Внереализованные_доходы);
+        model.addAttribute("Doxod_3", Order_balance.Иные_поступления);
+        model.addAttribute("Rasxod_1", Order_balance.Расходы);
+        model.addAttribute("Rasxod_2", Order_balance.Иные_расходы);
+        return "nds_dobav";
+    }
     public String kydir() {
         return "kydir";
     }
@@ -513,6 +712,7 @@ public class UserController {
     public String byx_pr() {
         return "byx_pr";
     }
+
 
 
     public String oper_pr_id() {

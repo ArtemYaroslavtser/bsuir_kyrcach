@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:width="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carousel Template · Bootstrap v5.1</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/carousel/">
+    <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Favicons -->
+    <meta name="theme-color" content="#7952b3">
+
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            background: -webkit-linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
+            background: -moz-linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
+            background: linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
+        }
+        .card{
+            background: -webkit-linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
+            background: -moz-linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
+            background: linear-gradient(180deg, rgb(236, 223, 152) 24%, rgb(178, 170, 209) 65%);
+        }
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        tr,th {
+            padding: 3px;
+            border: 1px solid black;
+        }
+        nav {
+            width: 2000px;
+        }
+        .container {
+            padding: 0 0 0 166px;
+            margin: 0;
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+
+</head>
+
+<body>
+
+<div th:replace="clientHeader :: client-header"></div>
+<input type="hidden" th:value="${id}" th:name="id">
+<main   role="main" class="container ">
+    <div class="text-center mt-4">
+            <div th:switch="${byx}" class="col-md-12">
+                <h2 th:case="null">Пока нет запрошенных учётов</h2>
+                <div th:case="*">
+                    <table  class="table table-striped table-responsive-md" style="background-color: #cecdcd">
+                        <thead>
+                        <tr>
+                            <th rowspan="3">Дата приобретения(ввоза) и номер документа</th>
+                            <th rowspan="3">Дата оплаты и номе документа</th>
+                            <th rowspan="2" colspan="3">Реквизиты электронного счета-фактуры</th>
+                            <th rowspan="3">Наименование продавца</th>
+                            <th rowspan="3">Учётный номер плательщика продавца</th>
+                            <th rowspan="3">Стоимость товаров,имущественных прав,включая НДС</th>
+                            <th colspan="6">Обьекты,облагаемые НДС по ставке</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">20%</th>
+                            <th colspan="2">10%</th>
+                            <th colspan="2">Иные</th>
+                        </tr>
+                        <tr>
+                            <th>Номер и дата выставления электронного счета-фактуры</th>
+                            <th>Дата совершения операции</th>
+                            <th>Дата подписания электронного счета=фактуры</th>
+                            <th>Стоимость бед НДС</th>
+                            <th>Сумма НДС</th>
+                            <th>Стоимость бед НДС</th>
+                            <th>Сумма НДС</th>
+                            <th>Стоимость бед НДС</th>
+                            <th>Сумма НДС</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="answer : ${byx}">
+                            <td th:text="${answer.accounts.date}"></td>
+                            <td th:text="${answer.accounts.date}"></td>
+                            <td>СЧФ - 2022 001</td>
+                            <td th:text="${answer.accounts.date}"></td>
+                            <td th:text="${answer.accounts.date}"></td>
+                            <td th:text="${answer.accounts.name_operat}"></td>
+                            <td> 971452</td>
+                            <td th:text="${answer.accounts.symm + answer.accounts.nalog}"></td>
+                            <td th:switch="${answer.accounts.pronds}">
+                                <p th:case="${Tw}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+                            <td th:switch="${answer.accounts.pronds}">
+                                <p th:case="${Tw}" th:text="${answer.accounts.nalog}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+                            <td th:switch="${answer.accounts.pronds}">
+                                <p th:case="${Ten}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+                            <td th:switch="${answer.accounts.pronds}">
+                                <p th:case="${Ten}" th:text="${answer.accounts.nalog}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+                            <td th:switch="${answer.accounts.pronds}">
+                                <p th:case="${Zero}" th:text="${answer.accounts.symm}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+                            <td th:switch="${answer.accounts.pronds}">
+                                <p th:case="${Zero}" th:text="${answer.accounts.nalog}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+                            <td th:switch="${answer.accounts.pronds}">
+                                <p th:case="${Zero}" th:text="${answer.accounts.nalog}"> </p>
+                                <p th:case="*">0</p>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="7">Итого :</td>
+                            <td th:text="${doxod}"></td>
+                            <td th:text="${St_b}">
+                            </td>
+
+                            <td th:text="${Nds}">
+                            </td>
+
+                            <td>0
+                            </td>
+
+                            <td >0
+                            </td>
+
+                            <td>0
+                            </td>
+
+                            <td>0
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+
+    <form th:action="@{'/home'}" method="get">
+        <div class="form-group">
+            <button type="submit" class="btn btn-success control-label">На главную</button>
+        </div>
+    </form>
+</main>
+
+
+</body>
+
+
+</html>

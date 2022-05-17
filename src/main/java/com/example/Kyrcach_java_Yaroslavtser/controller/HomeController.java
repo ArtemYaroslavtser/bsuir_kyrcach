@@ -50,7 +50,9 @@ public class HomeController {
         return "home";
     }
 
-
+    public String getSignUpView_test() {
+        return "reg";
+    }
 
     @GetMapping(value = "/reg")
     public String getSignUpView(Model model) {

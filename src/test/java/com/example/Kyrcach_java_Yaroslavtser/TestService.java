@@ -61,6 +61,9 @@ public class TestService {
     @Autowired
     AccountsEntityRepository accountsEntityRepository;
 
+    @Autowired
+    Accounts_ychetEntityRepository accounts_ychetEntityRepository;
+
     @BeforeEach
     void setUp(){
 
@@ -69,7 +72,6 @@ public class TestService {
         dogovorEntity = new DogovorEntity("name_dogovor",50,date,DogovorStatus.Заключен);
         work_ipEntity = new Work_ipEntity("name_work","adress",5);
         ychetEntity = new YchetEntity("work",YchetStatus.Оперативный,YchetStatus_admin.Оформлен,date,date,userEntity);
-        accountsEntity = new AccountsEntity("name_operat","goal",50,OrderStatus.Выручка,userEntity,date);
     }
 
 
@@ -153,7 +155,7 @@ public class TestService {
     }
 
     @Test
-    void account_ychet_1(){
+    void account_ychet__1(){
         List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByUserEntityId(14L);
         Assert.assertNotNull(accountsEntities);
     }
@@ -162,6 +164,19 @@ public class TestService {
     void account_ychet_2(){
         Date date = new Date();
         List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDateFirstandSecond(date,date,10L);
+        Assert.assertNotNull(accountsEntities);
+    }
+
+    @Test
+    void Kydir_1(){
+        List<Accounts_ychetEntity> accountsEntities = accounts_ychetEntityRepository.findAll();
+        Assert.assertNotNull(accountsEntities);
+    }
+
+
+    @Test
+    void Kydir__1(){
+        List<Accounts_ychetEntity> accountsEntities = accounts_ychetEntityRepository.findAll();
         Assert.assertNotNull(accountsEntities);
     }
 }

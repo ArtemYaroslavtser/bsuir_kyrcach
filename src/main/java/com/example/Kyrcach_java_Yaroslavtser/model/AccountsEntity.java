@@ -39,8 +39,31 @@ public class AccountsEntity extends First_Entity {
     @Enumerated(EnumType.STRING)
     private NDS nds;
 
+    @Column(name = "NDS_oplata")
+    @Enumerated(EnumType.STRING)
+    private NDS_oplata nds_oplata;
+
+    @Column(name = "NDS_YES")
+    private int NDS_YES;
+
     @Column(name = "Pro_NDS")
     private int pronds;
+
+    public NDS_oplata getNds_oplata() {
+        return nds_oplata;
+    }
+
+    public void setNds_oplata(NDS_oplata nds_oplata) {
+        this.nds_oplata = nds_oplata;
+    }
+
+    public int getNDS_YES() {
+        return NDS_YES;
+    }
+
+    public void setNDS_YES(int NDS_YES) {
+        this.NDS_YES = NDS_YES;
+    }
 
     public Date getDate() {
         return date;
@@ -141,7 +164,8 @@ public class AccountsEntity extends First_Entity {
     }
 
 
-    public AccountsEntity(String name_operat, Operation goal, int symm, OrderStatus status, UserEntity userEntity, Date date, int nalog, Order_balance order_balance, NDS nds, int pronds) {
+    public AccountsEntity(String name_operat, Operation goal, int symm, OrderStatus status, UserEntity userEntity, Date date, int nalog, Order_balance order_balance, NDS nds, int pronds, NDS_oplata nds_oplata, int NDS_YES) {
+
         this.name_operat = name_operat;
         this.goal = goal;
         Symm = symm;
@@ -152,6 +176,8 @@ public class AccountsEntity extends First_Entity {
         this.order_balance = order_balance;
         this.nds = nds;
         this.pronds = pronds;
+        this.nds_oplata = nds_oplata;
+        this.NDS_YES = NDS_YES;
     }
 
     public AccountsEntity() {
@@ -169,5 +195,7 @@ public class AccountsEntity extends First_Entity {
         this.order_balance = accounts.getOrder_balance();
         this.nds = accounts.getNds();
         this.pronds = accounts.getPronds();
+        this.nds_oplata = accounts.getNds_oplata();
+        this.NDS_YES = accounts.getNDS_YES();
     }
 }

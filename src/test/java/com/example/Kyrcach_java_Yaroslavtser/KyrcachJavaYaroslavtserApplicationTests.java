@@ -24,8 +24,8 @@ class KyrcachJavaYaroslavtserApplicationTests {
 	}
 	@Test
 	void testEnum_Order() {
-		String b = String.valueOf(OrderStatus.Выручка);
-		Assert.isTrue(String.valueOf(OrderStatus.Выручка).equals(b));
+	String b = String.valueOf(OrderStatus.Расходы);
+	Assert.isTrue(String.valueOf(OrderStatus.Расходы).equals(b));
 	}
 	@Test
 	void testEnum_Ychet() {

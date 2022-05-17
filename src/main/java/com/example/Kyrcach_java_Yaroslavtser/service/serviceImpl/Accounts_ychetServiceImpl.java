@@ -82,6 +82,8 @@ public class Accounts_ychetServiceImpl implements Accounts_ychetService {
         }
 
         List<AccountsEntity> accountsEntityList = accountsEntityRepository.findAllByDateFirstandSecond(date, ychetDTO.getDateSecond(),ychetEntity.getUserEntity1().getId());
+        List<Accounts_ychetEntity> accounts_ychetEntities = accounts_ychetEntityRepository.findByYchetEntityId_user(ychetEntity.getUserEntity1().getId());
+        accounts_ychetEntityRepository.deleteAll(accounts_ychetEntities);
         for (AccountsEntity accountsEntity : accountsEntityList) {
             Accounts_ychetEntity accounts_ychetEntity = new Accounts_ychetEntity();
             accounts_ychetEntity.setAccounts(accountsEntity);

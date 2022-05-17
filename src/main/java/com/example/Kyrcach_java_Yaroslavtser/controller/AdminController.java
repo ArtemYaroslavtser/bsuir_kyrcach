@@ -60,6 +60,16 @@ public class AdminController {
         int virychka = 0;
         Long id_ychet = 0L;
         ArrayList<Accounts_ychetEntity> byx = new ArrayList<>();
+        List<Accounts_ychetEntity> accounts_ychetEntitiList1 = accounts_ychetEntityRepository.findAll();
+
+        for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList1) {
+                if (accountsYchetEntity.getYchetEntity().getYchetStatus_admin() == YchetStatus_admin.Оформлен) {
+                    if(accountsYchetEntity.getYchetEntity().getId() != id_ychet){
+                        id_ychet = accountsYchetEntity.getYchetEntity().getId();
+                        accounts_ychetEntityRepository.delete(accountsYchetEntity);
+                    }
+                }
+        }
         List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findAll();
         for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
             if (accountsYchetEntity.getYchetEntity().getStatus() == YchetStatus.Бухгалтерский) {
@@ -81,7 +91,7 @@ public class AdminController {
 
         accounts_ychetService.change_status(id);
 
-        return byx_admin(model);
+        return "home";
     }
     public String byx_admin_test(){
         return "adminTable";

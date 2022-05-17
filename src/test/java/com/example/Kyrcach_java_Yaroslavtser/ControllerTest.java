@@ -142,4 +142,16 @@ class ControllerTest {
         if(!userEntity.getLastName().equals("name")) throw new IllegalArgumentException();
     }
 
+
+    @Test
+    void Test_Reg(){
+        UserDTO userDTO = new UserDTO(100L,"login","password","fist","second","+375","USER_ROLE");
+        userDTO.setLogin("LOGIN_TEST");
+        String s =  "ROLE_USER";
+        boolean s1 = userService.save(userDTO,s);
+        org.junit.Assert.assertTrue(s1);
+    }
+
+
+
 }

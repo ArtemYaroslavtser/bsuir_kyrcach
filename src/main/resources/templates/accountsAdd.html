@@ -111,6 +111,22 @@
                             <option th:value="20">20%</option>
                         </select>
 
+                        <label for="firstName" class="col-form-label" th:text="#{text.NDS_oplata}"></label>
+                        <label for="firstName" class="col-form-label" th:text="#{text.NDS_oplata_YSH}"></label>
+                        <label for="firstName" class="col-form-label" th:text="#{text.NDS_oplata_Dr}"></label>
+                        <select class="form-group col-md-8" th:field="*{nds_oplata}" id="NDS_oplata">
+                            <option value="">Ничего не выбрано</option>
+                            <option th:value="${Nds_1}"
+                                    th:text="${Nds_1}">
+                            </option>
+                            <option th:value="${Nds_2}"
+                                    th:text="${Nds_2}">
+                            </option>
+                            <option th:value="${Nds_3}"
+                                    th:text="${Nds_3}">
+                            </option>
+                        </select>
+
                         <div class="form-group col-md-8">
                             <label for="firstName1" class="col-form-label" th:text="#{text.date_work}"></label>
                             <input type="date" th:value="${account?.date}" th:name="date" class="form-control"

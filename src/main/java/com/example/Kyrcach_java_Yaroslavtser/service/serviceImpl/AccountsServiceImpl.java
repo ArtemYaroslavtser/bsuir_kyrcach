@@ -79,6 +79,8 @@ public class AccountsServiceImpl implements AccountsService {
         AccountsEntity accountsEntity = new AccountsEntity();
         accountsEntity.setName_operat(accountsDTO.getName_operat());
         accountsEntity.setGoal(accountsDTO.getGoal());
+        accountsEntity.setNds_oplata(accountsDTO.getNds_oplata());
+        accountsEntity.setNDS_YES(0);
         if(accountsDTO.getGoal() == Operation.Оказание_услуги) {
             accountsEntity.setGoal(accountsDTO.getGoal());
             accountsEntity.setStatus(OrderStatus.Доходы);
@@ -97,6 +99,8 @@ public class AccountsServiceImpl implements AccountsService {
             accountsEntity.setNalog((accountsDTO.getSymm() * accountsDTO.getPronds())/(100+ accountsDTO.getPronds()));
             accountsEntity.setSymm(accountsDTO.getSymm() - accountsEntity.getNalog());
 
+            accountsEntity1.setNds_oplata(accountsDTO.getNds_oplata());
+            accountsEntity1.setNDS_YES(0);
             accountsEntity1.setName_operat(accountsDTO.getName_operat());
             accountsEntity1.setGoal(Operation.НДС_К_ВЫЧЕТУ);
             accountsEntity1.setStatus(OrderStatus.Расходы);
@@ -124,6 +128,8 @@ public class AccountsServiceImpl implements AccountsService {
             accountsEntity.setNalog((accountsDTO.getSymm() * accountsDTO.getPronds())/(100+ accountsDTO.getPronds()));
             accountsEntity.setSymm(accountsDTO.getSymm() - accountsEntity.getNalog());
 
+            accountsEntity1.setNds_oplata(accountsDTO.getNds_oplata());
+            accountsEntity1.setNDS_YES(0);
             accountsEntity1.setName_operat(accountsDTO.getName_operat());
             accountsEntity1.setGoal(Operation.НДС_К_ВЫЧЕТУ);
             accountsEntity1.setStatus(OrderStatus.Расходы);
@@ -140,7 +146,6 @@ public class AccountsServiceImpl implements AccountsService {
         }
 
         if(accountsDTO.getGoal() == Operation.Выплата_ЗП) {
-            AccountsEntity accountsEntity1 = new AccountsEntity();
             accountsEntity.setStatus(OrderStatus.Расходы);
             accountsEntity.setOrder_balance(Order_balance.Расходы);
             accountsEntity.setNds(NDS.Подоходный_налог);
@@ -159,6 +164,60 @@ public class AccountsServiceImpl implements AccountsService {
         accountsEntity.setDate(accountsDTO.getDate());
         accountsEntity.setPronds(accountsDTO.getPronds());
         accountsEntity.setNalog((accountsDTO.getSymm() * accountsDTO.getPronds())/(100 + accountsDTO.getPronds()));
+        accountsEntityRepository.save(accountsEntity);
+    }
+
+    @Override
+    public void add_Accounts_by_YSH(Accounts_ychetEntity accountsYchetEntity, int NDS_) {
+        AccountsEntity accountsEntity = new AccountsEntity();
+        accountsEntity.setName_operat("");
+        accountsEntity.setNDS_YES(1);
+        accountsEntity.setNds_oplata(NDS_oplata.Нет_типа_уплаты_налогов);
+        accountsEntity.setGoal(Operation.Налог_по_УСН);
+        accountsEntity.setStatus(OrderStatus.Расходы);
+        accountsEntity.setOrder_balance(Order_balance.Расходы);
+        accountsEntity.setNds(NDS.Подоходный_налог);
+        accountsEntity.setSymm(NDS_);
+        accountsEntity.setUserEntity(accountsYchetEntity.getYchetEntity().getUserEntity1());
+        accountsEntity.setDate(accountsYchetEntity.getAccounts().getDate());
+        accountsEntity.setPronds(0);
+        accountsEntity.setNalog(0);
+        accountsEntityRepository.save(accountsEntity);
+    }
+
+    @Override
+    public void add_Accounts_by_POD(Accounts_ychetEntity accountsYchetEntity, int NDS_) {
+        AccountsEntity accountsEntity = new AccountsEntity();
+        accountsEntity.setName_operat("");
+        accountsEntity.setNDS_YES(1);
+        accountsEntity.setNds_oplata(NDS_oplata.Нет_типа_уплаты_налогов);
+        accountsEntity.setGoal(Operation.Подоходный_налог);
+        accountsEntity.setStatus(OrderStatus.Расходы);
+        accountsEntity.setOrder_balance(Order_balance.Расходы);
+        accountsEntity.setNds(NDS.Подоходный_налог);
+        accountsEntity.setSymm(NDS_);
+        accountsEntity.setUserEntity(accountsYchetEntity.getYchetEntity().getUserEntity1());
+        accountsEntity.setDate(accountsYchetEntity.getAccounts().getDate());
+        accountsEntity.setPronds(0);
+        accountsEntity.setNalog(0);
+        accountsEntityRepository.save(accountsEntity);
+    }
+
+    @Override
+    public void add_Accounts_by_Dov(Accounts_ychetEntity accountsYchetEntity, int NDS_) {
+        AccountsEntity accountsEntity = new AccountsEntity();
+        accountsEntity.setName_operat("");
+        accountsEntity.setNDS_YES(1);
+        accountsEntity.setNds_oplata(NDS_oplata.Нет_типа_уплаты_налогов);
+        accountsEntity.setGoal(Operation.Перечислен_НДС);
+        accountsEntity.setStatus(OrderStatus.Расходы);
+        accountsEntity.setOrder_balance(Order_balance.Расходы);
+        accountsEntity.setNds(NDS.Подоходный_налог);
+        accountsEntity.setSymm(NDS_);
+        accountsEntity.setUserEntity(accountsYchetEntity.getYchetEntity().getUserEntity1());
+        accountsEntity.setDate(accountsYchetEntity.getAccounts().getDate());
+        accountsEntity.setPronds(0);
+        accountsEntity.setNalog(0);
         accountsEntityRepository.save(accountsEntity);
     }
 

@@ -1,9 +1,6 @@
 package com.example.Kyrcach_java_Yaroslavtser.controller.DTO;
 
-import com.example.Kyrcach_java_Yaroslavtser.model.NDS;
-import com.example.Kyrcach_java_Yaroslavtser.model.Operation;
-import com.example.Kyrcach_java_Yaroslavtser.model.OrderStatus;
-import com.example.Kyrcach_java_Yaroslavtser.model.Order_balance;
+import com.example.Kyrcach_java_Yaroslavtser.model.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.User;
 
@@ -42,8 +39,18 @@ public class AccountsDTO {
 
     private int pronds;
 
+    private NDS_oplata nds_oplata;
+
     public int getNalog() {
         return nalog;
+    }
+
+    public NDS_oplata getNds_oplata() {
+        return nds_oplata;
+    }
+
+    public void setNds_oplata(NDS_oplata nds_oplata) {
+        this.nds_oplata = nds_oplata;
     }
 
     public void setNalog(int nalog) {
@@ -58,6 +65,15 @@ public class AccountsDTO {
         this.balance = balance;
     }
 
+private int NDS_YES;
+
+    public int getNDS_YES() {
+        return NDS_YES;
+    }
+
+    public void setNDS_YES(int NDS_YES) {
+        this.NDS_YES = NDS_YES;
+    }
 
     public NDS getNds() {
         return nds;

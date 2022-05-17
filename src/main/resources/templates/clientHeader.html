@@ -21,6 +21,7 @@
 <style>
    .navbar{
        background-color: #6ece9b;
+       width: 100%;
    }
 </style>
 <body>
@@ -84,6 +85,23 @@
                                 <li>  <a class="dropdown-item" th:href="@{/users/oper_pr}" th:text="#{text.oper_pr}"></a> </li>
                                 <li>   <div class="dropdown-divider"></div> </li>
                                 <li>  <a class="dropdown-item" th:href="@{/users/nds}" th:text="#{text.kniga}"></a> </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown5">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink5" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{text.nalogi}">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink4">
+                                <li>  <a class="dropdown-item" th:href="@{/users/NDS_YCH}" th:text="#{text.YCH}"></a> </li>
+                                <li>   <div class="dropdown-divider"></div> </li>
+                                <li>  <a class="dropdown-item" th:href="@{/users/NDS_Pod}" th:text="#{text.Pod}"></a> </li>
+                                <li>   <div class="dropdown-divider"></div> </li>
+                                <li>  <a class="dropdown-item" th:href="@{/users/nds_yplat}" th:text="#{text.yp}"></a> </li>
 
                             </ul>
                         </li>
