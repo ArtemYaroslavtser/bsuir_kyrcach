@@ -50,6 +50,9 @@ public class TestService {
     BalanceEntityRepository balanceEntityRepository;
 
     @Autowired
+    UserEntityRepository userEntityRepository;
+
+    @Autowired
     DogovorEntityRepository dogovorEntityRepository;
 
     @Autowired
@@ -91,28 +94,20 @@ public class TestService {
 
     @Test
     void test_find_balance(){
-        BalanceDTO balanceDTO = balanceService.findByUserId(10L);
+        BalanceDTO balanceDTO = balanceService.findByUserId(55L);
         Assert.assertNotNull(balanceDTO);
     }
 
     @Test
     void find_dogovor(){
-        DogovorDTO dogovorDTO = dogovorService.findByUserId(10L);
+        DogovorDTO dogovorDTO = dogovorService.findByUserId(55L);
         Assert.assertNotNull(dogovorDTO);
-    }
-
-    @Test
-    void dogovor_update(){
-        Date date = new Date();
-        UserDTO userDTO = new UserDTO();
-        DogovorDTO dogovorDTO = new DogovorDTO(1L,"name_dogovor",50,date,userDTO,DogovorStatus.Заключен);
-        dogovorService.update(dogovorDTO);
     }
 
 
     @Test
     void check_dogovor_rep(){
-        DogovorEntity dogovorEntity1 = dogovorEntityRepository.findByOwnerId(10L);
+        DogovorEntity dogovorEntity1 = dogovorEntityRepository.findByOwnerId(55L);
         Assert.assertNotNull(dogovorEntity1);
     }
 
@@ -124,20 +119,20 @@ public class TestService {
 
     @Test
     void check_work_rep(){
-        Work_ipEntity work_ipEntity1 = workEntityRepository.findByOwnerId(10L);
+        Work_ipEntity work_ipEntity1 = workEntityRepository.findByOwnerId(55L);
         Assert.assertNotNull(work_ipEntity1);
 
     }
 
     @Test
     void check_work_name_work(){
-        String name_work = workEntityRepository.getname_workByOwnerId(10L);
+        String name_work = workEntityRepository.getname_workByOwnerId(55L);
         Assert.assertNotNull(name_work);
     }
 
     @Test
     void check_ychet(){
-        YchetEntity ychetEntity1 = ychetEntityRepository.getById(10L);
+        YchetEntity ychetEntity1 = ychetEntityRepository.getById(46L);
         Assert.assertNotNull(ychetEntity1);
     }
 
@@ -150,33 +145,58 @@ public class TestService {
     @Test
     void account_ychet(){
         Date date = new Date();
-       List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDate(date, 10L);
+       List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDate(date, 55L);
        Assert.assertNotNull(accountsEntities);
     }
 
     @Test
     void account_ychet__1(){
-        List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByUserEntityId(14L);
+        List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByUserEntityId(55L);
         Assert.assertNotNull(accountsEntities);
     }
 
     @Test
     void account_ychet_2(){
         Date date = new Date();
-        List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDateFirstandSecond(date,date,10L);
+        List<AccountsEntity> accountsEntities = accountsEntityRepository.findAllByDateFirstandSecond(date,date,55L);
         Assert.assertNotNull(accountsEntities);
     }
 
+    @Test
+    void polzovatel(){
+        List<UserEntity> userEntityList = userEntityRepository.findAll();
+        Assertions.assertNotNull(userEntityList);
+    }
+
+    @Test
+    void admin(){
+        List<UserEntity> userEntityList = userEntityRepository.findAllByRoleEntity_Role("ROLE_ADMIN");
+        Assertions.assertNotNull(userEntityList);
+    }
+
+    @Test
+    void vir_pol(){
+        int summ = 0;
+        List<Accounts_ychetEntity> accounts_ychetEntitiList = accounts_ychetEntityRepository.findByYchetEntityId(57L);
+        for (Accounts_ychetEntity accountsYchetEntity : accounts_ychetEntitiList) {
+            summ = summ + accountsYchetEntity.getAccounts().getSymm();
+        }
+        Assertions.assertNotNull(summ);
+    }
+
+    @Test
+    void vir_byx(){
+        int summ = 0;
+        List<DogovorEntity> dogovorEntityList = dogovorEntityRepository.findAll();
+        for (DogovorEntity accountsYchetEntity : dogovorEntityList) {
+            summ = summ + accountsYchetEntity.getSumm();
+        }
+        Assertions.assertNotNull(summ);
+    }
     @Test
     void Kydir_1(){
         List<Accounts_ychetEntity> accountsEntities = accounts_ychetEntityRepository.findAll();
         Assert.assertNotNull(accountsEntities);
     }
 
-
-    @Test
-    void Kydir__1(){
-        List<Accounts_ychetEntity> accountsEntities = accounts_ychetEntityRepository.findAll();
-        Assert.assertNotNull(accountsEntities);
-    }
 }

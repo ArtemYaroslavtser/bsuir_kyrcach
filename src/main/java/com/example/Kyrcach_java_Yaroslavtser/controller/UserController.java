@@ -618,6 +618,10 @@ public class UserController {
         return "nds_yplat";
     }
 
+    public String NDS_yplat_test(){
+        return "nds_yplat";
+    }
+
     @GetMapping(path = "/NDS_yplat/reg")
     public String NDS_yplat_post(Model model,@AuthenticationPrincipal CustomUserDetail currUser) {
         int promeh = 0;
@@ -643,6 +647,8 @@ public class UserController {
         accountsService.add_Accounts_by_Dov(accountsYchetEntity1,Nds_i);
         return "home";
     }
+
+
 
     @GetMapping(path = "/nds_vit")
     public String nds(Model model,@AuthenticationPrincipal CustomUserDetail currUser) {
@@ -672,6 +678,10 @@ public class UserController {
         model.addAttribute("Doxod_3", Order_balance.Иные_поступления);
         model.addAttribute("Rasxod_1", Order_balance.Расходы);
         model.addAttribute("Rasxod_2", Order_balance.Иные_расходы);
+        return "nds_vicet";
+    }
+
+    public String ndstest(){
         return "nds_vicet";
     }
 
@@ -705,6 +715,10 @@ public class UserController {
         model.addAttribute("Rasxod_2", Order_balance.Иные_расходы);
         return "nds_dobav";
     }
+    public String nds_dobav_test(){
+        return "nds_dobav";
+    }
+
     public String kydir() {
         return "kydir";
     }
